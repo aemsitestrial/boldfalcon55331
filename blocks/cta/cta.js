@@ -26,40 +26,42 @@ export default function decorate(block) {
     openInNewTab,
   } = data;
 
-  const link = document.createElement('a');
+  const a = document.createElement('a');
 
-  link.href = ctaLink || '#';
-  link.className = `cmp-cta cmp-cta-${shape || 'rectangle'}`;
-  link.textContent = ctaText || '';
+  a.href = ctaLink;
+  a.className = `cmp-cta cmp-cta--${shape || 'rectangle'}`;
+
+  a.textContent = ctaText;
 
   if (openInNewTab === 'true') {
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
   }
 
   if (ariaLabel) {
-    link.setAttribute('aria-label', ariaLabel);
+    a.setAttribute('aria-label', ariaLabel);
   }
 
   if (backgroundColor) {
-    link.style.backgroundColor = backgroundColor;
+    a.style.backgroundColor = backgroundColor;
   }
 
   if (textColor) {
-    link.style.color = textColor;
+    a.style.color = textColor;
   }
 
   if (borderColor) {
-    link.style.borderColor = borderColor;
+    a.style.borderColor = borderColor;
   }
 
   if (arrowDirection === 'right') {
-    link.append(document.createTextNode(' →'));
+    a.innerHTML += ' →';
   }
 
   if (arrowDirection === 'left') {
-    link.prepend(document.createTextNode('← '));
+    a.innerHTML = `← ${a.innerHTML}`;
   }
 
-  block.replaceChildren(link);
+  block.textContent = '';
+  block.append(a);
 }
