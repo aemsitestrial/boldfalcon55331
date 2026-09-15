@@ -1,5 +1,4 @@
 export default function decorate(block) {
-
   const data = {};
 
   [...block.children].forEach((row) => {
@@ -27,42 +26,40 @@ export default function decorate(block) {
     openInNewTab,
   } = data;
 
-  const a = document.createElement('a');
+  const link = document.createElement('a');
 
-  a.href = ctaLink;
-  a.className = `cmp-cta cmp-cta--${shape || 'rectangle'}`;
-
-  a.textContent = ctaText;
+  link.href = ctaLink || '#';
+  link.className = `cmp-cta cmp-cta--${shape || 'rectangle'}`;
+  link.textContent = ctaText || '';
 
   if (openInNewTab === 'true') {
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
   }
 
   if (ariaLabel) {
-    a.setAttribute('aria-label', ariaLabel);
+    link.setAttribute('aria-label', ariaLabel);
   }
 
   if (backgroundColor) {
-    a.style.backgroundColor = backgroundColor;
+    link.style.backgroundColor = backgroundColor;
   }
 
   if (textColor) {
-    a.style.color = textColor;
+    link.style.color = textColor;
   }
 
   if (borderColor) {
-    a.style.borderColor = borderColor;
+    link.style.borderColor = borderColor;
   }
 
   if (arrowDirection === 'right') {
-    a.innerHTML = `${a.innerHTML} →`;
+    link.insertAdjacentText('beforeend', ' →');
   }
 
   if (arrowDirection === 'left') {
-    a.innerHTML = `← ${a.innerHTML}`;
+    link.insertAdjacentText('afterbegin', '← ');
   }
 
-  block.textContent = '';
-  block.append(a);
+  block.replaceChildren(link);
 }
