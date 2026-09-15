@@ -29,7 +29,7 @@ export default function decorate(block) {
   const link = document.createElement('a');
 
   link.href = ctaLink || '#';
-  link.className = `cmp-cta cmp-cta--${shape || 'rectangle'}`;
+  link.className = `cmp-cta cmp-cta-${shape || 'rectangle'}`;
   link.textContent = ctaText || '';
 
   if (openInNewTab === 'true') {
@@ -54,11 +54,11 @@ export default function decorate(block) {
   }
 
   if (arrowDirection === 'right') {
-    link.insertAdjacentText('beforeend', ' →');
+    link.append(document.createTextNode(' →'));
   }
 
   if (arrowDirection === 'left') {
-    link.insertAdjacentText('afterbegin', '← ');
+    link.prepend(document.createTextNode('← '));
   }
 
   block.replaceChildren(link);

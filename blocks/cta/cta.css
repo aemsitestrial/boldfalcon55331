@@ -9,15 +9,15 @@
   transition: all .2s ease;
 }
 
-.cmp-cta--rectangle {
+.cmp-cta-rectangle {
   border-radius: 0;
 }
 
-.cmp-cta--rounded {
+.cmp-cta-rounded {
   border-radius: .375rem;
 }
 
-.cmp-cta--pill {
+.cmp-cta-pill {
   border-radius: 9999px;
 }
 
