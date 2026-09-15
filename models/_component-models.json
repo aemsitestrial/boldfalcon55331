@@ -22,5 +22,8 @@
   },
   {
     "...": "./_cta.json#/models"
+  },
+  {
+    "...": "./_cardsCopy.json#/models"
   }
 ]
