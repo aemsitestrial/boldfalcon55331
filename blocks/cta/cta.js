@@ -28,7 +28,7 @@ export default function decorate(block) {
   const a = document.createElement('a');
 
   a.href = ctaLink;
-  a.className = `cmp-cta cmp-cta--${shape || 'rectangle'}`;
+  a.className = `cmp-cta cmp-cta-${shape || 'rectangle'}`;
 
   a.textContent = ctaText;
 
