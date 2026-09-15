@@ -54,11 +54,11 @@ export default function decorate(block) {
   }
 
   if (arrowDirection === 'right') {
-    a.innerHTML += ' →';
+    a.textContent = `${a.textContent} →`;
   }
 
   if (arrowDirection === 'left') {
-    a.innerHTML = `← ${a.innerHTML}`;
+    a.textContent = `← ${a.textContent}`;
   }
 
   block.textContent = '';
