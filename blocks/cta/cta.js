@@ -24,7 +24,7 @@ export default function decorate(block) {
     borderColor,
     arrowDirection,
     ariaLabel,
-    openInNewTab
+    openInNewTab,
   } = data;
 
   const a = document.createElement('a');
@@ -56,11 +56,11 @@ export default function decorate(block) {
   }
 
   if (arrowDirection === 'right') {
-    a.innerHTML += ' →';
+    a.innerHTML = `${a.innerHTML} →`;
   }
 
   if (arrowDirection === 'left') {
-    a.innerHTML = '← ' + a.innerHTML;
+    a.innerHTML = `← ${a.innerHTML}`;
   }
 
   block.textContent = '';
