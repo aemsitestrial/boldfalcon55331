@@ -1,6 +1,5 @@
 export default function decorate(block) {
   const data = {};
-
   [...block.children].forEach((row) => {
     const cols = row.querySelectorAll('div');
 
