@@ -1,36 +1,107 @@
 /**
- * Convert authored value to boolean.
+ * CTA Block
  *
- * @param {string|boolean} value
- * @returns {boolean}
+ * Reads the values authored through Universal Editor
+ * and renders exactly one anchor element.
  */
-function parseBoolean(value) {
-  if (typeof value === 'boolean') {
-    return value;
+
+/**
+ * Get clean text from an authored field row.
+ *
+ * Universal Editor exposes model fields as child elements
+ * of the block in field order.
+ *
+ * @param {Element} row authored field row
+ * @returns {string} field value
+ */
+function getFieldValue(row) {
+  if (!row) {
+    return '';
   }
 
-  return ['true', '1', 'yes', 'on']
-    .includes(String(value).trim().toLowerCase());
+  const input = row.querySelector(
+    'input:not([type="checkbox"]), textarea, select',
+  );
+
+  if (input) {
+    return String(input.value || '').trim();
+  }
+
+  return String(row.textContent || '').trim();
 }
 
 /**
- * Normalise URL.
+ * Convert an authored boolean value to a real boolean.
  *
- * @param {string} value
- * @returns {string}
+ * @param {Element} row authored boolean field
+ * @returns {boolean} boolean value
+ */
+function getBooleanValue(row) {
+  if (!row) {
+    return false;
+  }
+
+  const checkbox = row.querySelector('input[type="checkbox"]');
+
+  if (checkbox) {
+    return checkbox.checked;
+  }
+
+  const value = getFieldValue(row).toLowerCase();
+
+  return value === 'true' || value === 'yes' || value === '1';
+}
+
+/**
+ * Extract all CTA fields from the authored block.
+ *
+ * @param {Element} block CTA block
+ * @returns {Object} authored CTA fields
+ */
+function getAuthoredFields(block) {
+  const fields = Array.from(block.children);
+
+  return {
+    ctaText: getFieldValue(fields[0]),
+    ctaLink: getFieldValue(fields[1]),
+    openInNewTab: getBooleanValue(fields[2]),
+    shape: getFieldValue(fields[3]) || 'rectangle',
+    backgroundColor: getFieldValue(fields[4]),
+    textColor: getFieldValue(fields[5]),
+    borderColor: getFieldValue(fields[6]),
+    arrowDirection: getFieldValue(fields[7]) || 'none',
+  };
+}
+
+/**
+ * Safely handle an authored CTA URL.
+ *
+ * Supported:
+ * - https://
+ * - http://
+ * - mailto:
+ * - tel:
+ * - internal URLs beginning with /
+ *
+ * Anything else receives https://.
+ *
+ * @param {string} value authored URL
+ * @returns {string} safe CTA URL
  */
 function getSafeUrl(value) {
-  const url = (value || '').trim();
+  const url = String(value || '').trim();
 
   if (!url) {
     return '#';
   }
 
+  const lowerUrl = url.toLowerCase();
+
   if (
-    url.startsWith('https://')
-    || url.startsWith('http://')
-    || url.startsWith('mailto:')
-    || url.startsWith('tel:')
+    lowerUrl.startsWith('https://')
+    || lowerUrl.startsWith('http://')
+    || lowerUrl.startsWith('mailto:')
+    || lowerUrl.startsWith('tel:')
     || url.startsWith('/')
   ) {
     return url;
@@ -40,125 +111,93 @@ function getSafeUrl(value) {
 }
 
 /**
- * Shape CSS class.
+ * Return a supported CTA shape class.
  *
- * @param {string} shape
- * @returns {string}
+ * @param {string} value authored shape
+ * @returns {string} CSS class
  */
-function getShapeClass(shape) {
-  switch ((shape || '').toLowerCase()) {
-    case 'rounded':
-      return 'cmp-cta-rounded';
-
-    case 'pill':
-      return 'cmp-cta-pill';
-
-    case 'rectangle':
-    default:
-      return 'cmp-cta-rectangle';
-  }
-}
-
-/**
- * Build CTA text with arrow.
- *
- * @param {string} text
- * @param {string} direction
- * @returns {string}
- */
-function buildLabel(text, direction) {
-  switch ((direction || '').toLowerCase()) {
-    case 'left':
-      return `← ${text}`;
-
-    case 'right':
-      return `${text} →`;
-
-    default:
-      return text;
-  }
-}
-
-/**
- * Apply style if value is present.
- *
- * @param {HTMLElement} element
- * @param {string} property
- * @param {string} value
- */
-function applyStyle(element, property, value) {
-  if (value && value.trim()) {
-    element.style[property] = value.trim();
-  }
-}
-
-/**
- * Read UE-authored fields.
- *
- * @param {HTMLElement} block
- * @returns {Object}
- */
-function getFields(block) {
-  const values = [...block.children]
-    .map((item) => item.textContent.trim());
-
-  return {
-    ctaText: values[0] || '',
-    ctaLink: values[1] || '',
-    openInNewTab: values[2] || false,
-    shape: values[3] || 'rectangle',
-    backgroundColor: values[4] || '',
-    textColor: values[5] || '',
-    borderColor: values[6] || '',
-    arrowDirection: values[7] || 'none',
+function getShapeClass(value) {
+  const shapes = {
+    rectangle: 'cmp-cta-rectangle',
+    rounded: 'cmp-cta-rounded',
+    pill: 'cmp-cta-pill',
   };
+
+  return shapes[value] || shapes.rectangle;
+}
+
+/**
+ * Generate the arrow text.
+ *
+ * @param {string} direction authored arrow direction
+ * @returns {string} arrow character
+ */
+function getArrowText(direction) {
+  const arrows = {
+    left: '←',
+    right: '→',
+    none: '',
+  };
+
+  return arrows[direction] || '';
+}
+
+/**
+ * Apply an author-configured color only when a value exists.
+ *
+ * @param {CSSStyleDeclaration} style link style object
+ * @param {string} property CSS property
+ * @param {string} value authored color
+ */
+function applyColor(style, property, value) {
+  const color = String(value || '').trim();
+
+  if (color) {
+    style.setProperty(property, color);
+  }
 }
 
 /**
  * Decorate CTA block.
  *
- * @param {HTMLElement} block
+ * @param {Element} block CTA block
  */
 export default function decorate(block) {
-  const fields = getFields(block);
-
-  if (!fields.ctaText || !fields.ctaLink) {
-    return;
-  }
+  const {
+    ctaText,
+    ctaLink,
+    openInNewTab,
+    shape,
+    backgroundColor,
+    textColor,
+    borderColor,
+    arrowDirection,
+  } = getAuthoredFields(block);
 
   const link = document.createElement('a');
 
-  link.className = `cmp-cta ${getShapeClass(fields.shape)}`;
+  link.className = `cmp-cta ${getShapeClass(shape)}`;
 
-  link.href = getSafeUrl(fields.ctaLink);
+  link.href = getSafeUrl(ctaLink);
 
-  if (parseBoolean(fields.openInNewTab)) {
+  if (openInNewTab) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
   }
 
-  applyStyle(
-    link,
-    'backgroundColor',
-    fields.backgroundColor,
-  );
+  applyColor(link.style, 'background-color', backgroundColor);
+  applyColor(link.style, 'color', textColor);
+  applyColor(link.style, 'border-color', borderColor);
 
-  applyStyle(
-    link,
-    'color',
-    fields.textColor,
-  );
+  const arrow = getArrowText(arrowDirection);
 
-  applyStyle(
-    link,
-    'borderColor',
-    fields.borderColor,
-  );
-
-  link.textContent = buildLabel(
-    fields.ctaText,
-    fields.arrowDirection,
-  );
+  if (arrowDirection === 'left' && arrow) {
+    link.textContent = `${arrow} ${ctaText}`;
+  } else if (arrowDirection === 'right' && arrow) {
+    link.textContent = `${ctaText} ${arrow}`;
+  } else {
+    link.textContent = ctaText;
+  }
 
   block.replaceChildren(link);
 }

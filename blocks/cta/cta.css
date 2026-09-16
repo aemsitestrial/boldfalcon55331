@@ -1,5 +1,3 @@
-/* CTA base */
-
 .cmp-cta {
   display: inline-flex;
   align-items: center;
@@ -7,47 +5,38 @@
   gap: 0.5rem;
   box-sizing: border-box;
   max-width: 100%;
+  min-height: 2.75rem;
   padding: 0.75rem 1.25rem;
   border: 1px solid transparent;
-  border-radius: 0;
+  text-decoration: none;
   font: inherit;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.3;
   text-align: center;
-  text-decoration: none;
   white-space: normal;
   overflow-wrap: anywhere;
   cursor: pointer;
   transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    background-color 160ms ease,
-    color 160ms ease,
-    border-color 160ms ease;
-  -webkit-tap-highlight-color: transparent;
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* Prevent the browser's default visited color from
-   overriding an authored CTA text color. */
-
-.cmp-cta:visited {
-  color: inherit;
-}
-
-/* Shape: Rectangle */
-
+/* Rectangle */
 .cmp-cta-rectangle {
   border-radius: 0;
 }
 
-/* Shape: Rounded */
+/* Rounded */
 .cmp-cta-rounded {
   border-radius: 0.5rem;
 }
 
-/* Shape: Pill */
+/* Pill */
 .cmp-cta-pill {
-  border-radius: 9999px;
+  border-radius: 999px;
 }
 
 /* Hover */
@@ -55,9 +44,9 @@
   transform: translateY(-2px);
 }
 
-/* Focus */
-.cmp-cta:focus {
-  outline: 3px solid currentcolor;
+/* Keyboard focus */
+.cmp-cta:focus-visible {
+  outline: 3px solid currentColor;
   outline-offset: 3px;
 }
 
@@ -66,50 +55,38 @@
   transform: translateY(0);
 }
 
-
-.cmp-cta:focus-visible {
-  outline: 3px solid currentcolor;
-  outline-offset: 3px;
-}
-
-.cmp-cta:focus:not(:focus-visible) {
-  outline: none;
-}
-
-
-/* Keyboard focus should remain visible even when
-   the CTA is hovered. */
-
-.cmp-cta:hover:focus-visible {
-  transform: translateY(-2px);
+/* Disabled-looking state if browser/user agent applies it */
+.cmp-cta[aria-disabled='true'] {
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 /* Mobile */
-@media (width <= 600px) {
+@media (max-width: 600px) {
   .cmp-cta {
     width: auto;
     max-width: 100%;
+    min-height: 2.75rem;
     padding: 0.7rem 1rem;
+    font-size: 0.95rem;
   }
 }
 
-/* Very narrow screens */
-@media (width <= 360px) {
+/* Very small screens */
+@media (max-width: 360px) {
   .cmp-cta {
     width: 100%;
   }
 }
 
 /* Reduced motion */
-
 @media (prefers-reduced-motion: reduce) {
   .cmp-cta {
     transition: none;
   }
 
   .cmp-cta:hover,
-  .cmp-cta:active,
-  .cmp-cta:hover:focus-visible {
+  .cmp-cta:active {
     transform: none;
   }
 }
