@@ -23,22 +23,22 @@
       "fields": [
         {
           "component": "text",
-          "name": "ctaText",
+          "name": "cta_text",
           "label": "CTA Text"
         },
         {
           "component": "text",
-          "name": "ctaLink",
+          "name": "cta_link",
           "label": "CTA Link"
         },
         {
           "component": "checkbox",
-          "name": "openInNewTab",
+          "name": "behavior_openInNewTab",
           "label": "Open In New Tab"
         },
         {
           "component": "text",
-          "name": "ariaLabel",
+          "name": "behavior_ariaLabel",
           "label": "ARIA Label"
         },
         {
@@ -63,22 +63,22 @@
         },
         {
           "component": "text",
-          "name": "backgroundColor",
+          "name": "style_backgroundColor",
           "label": "Background Color"
         },
         {
           "component": "text",
-          "name": "textColor",
+          "name": "style_textColor",
           "label": "Text Color"
         },
         {
           "component": "text",
-          "name": "borderColor",
+          "name": "style_borderColor",
           "label": "Border Color"
         },
         {
           "component": "select",
-          "name": "arrowDirection",
+          "name": "behavior_arrowDirection",
           "label": "Arrow",
           "value": "none",
           "options": [
@@ -96,6 +96,14 @@
             }
           ]
         }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "cta",
+      "components": [
+        "cta"
       ]
     }
   ]

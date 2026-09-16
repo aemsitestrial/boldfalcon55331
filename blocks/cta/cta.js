@@ -1,13 +1,13 @@
 const FIELD_NAMES = new Set([
-  'ctaText',
-  'ctaLink',
+  'cta_text',
+  'cta_link',
   'shape',
-  'backgroundColor',
-  'textColor',
-  'borderColor',
-  'arrowDirection',
-  'ariaLabel',
-  'openInNewTab',
+  'style_backgroundColor',
+  'style_textColor',
+  'style_borderColor',
+  'behavior_arrowDirection',
+  'behavior_ariaLabel',
+  'behavior_openInNewTab',
 ]);
 
 function readFields(block) {
@@ -55,29 +55,29 @@ export default function decorate(block) {
   const fields = readFields(block);
   const link = document.createElement('a');
 
-  link.href = getSafeHref(fields.ctaLink);
+  link.href = getSafeHref(fields.cta_link);
   link.className = `cmp-cta cmp-cta-${fields.shape || 'rectangle'}`;
-  link.textContent = getLabel(fields.ctaText || '', fields.arrowDirection);
+  link.textContent = getLabel(fields.cta_text || '', fields.behavior_arrowDirection);
 
-  if (fields.openInNewTab === 'true') {
+  if (fields.behavior_openInNewTab === 'true') {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
   }
 
-  if (fields.ariaLabel) {
-    link.setAttribute('aria-label', fields.ariaLabel);
+  if (fields.behavior_ariaLabel) {
+    link.setAttribute('aria-label', fields.behavior_ariaLabel);
   }
 
-  if (fields.backgroundColor) {
-    link.style.backgroundColor = fields.backgroundColor;
+  if (fields.style_backgroundColor) {
+    link.style.backgroundColor = fields.style_backgroundColor;
   }
 
-  if (fields.textColor) {
-    link.style.color = fields.textColor;
+  if (fields.style_textColor) {
+    link.style.color = fields.style_textColor;
   }
 
-  if (fields.borderColor) {
-    link.style.borderColor = fields.borderColor;
+  if (fields.style_borderColor) {
+    link.style.borderColor = fields.style_borderColor;
   }
 
   block.replaceChildren(link);

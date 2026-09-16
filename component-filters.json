@@ -19,6 +19,12 @@
     ]
   },
   {
+    "id": "cardsCopy",
+    "components": [
+      "cardsCopyItem"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
@@ -37,6 +43,18 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "cta",
+    "components": [
+      "cta"
+    ]
+  },
+  {
+    "id": "product-showcase",
+    "components": [
+      "product-showcase"
     ]
   }
 ]

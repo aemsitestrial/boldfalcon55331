@@ -33,12 +33,12 @@
         },
         {
           "component": "text",
-          "name": "ctaText",
+          "name": "cta_text",
           "label": "CTA Text"
         },
         {
           "component": "text",
-          "name": "ctaLink",
+          "name": "cta_link",
           "label": "CTA Link"
         }
       ]

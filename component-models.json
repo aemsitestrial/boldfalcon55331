@@ -142,6 +142,25 @@
     ]
   },
   {
+    "id": "cardsCopy",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -180,6 +199,86 @@
     ]
   },
   {
+    "id": "cta",
+    "fields": [
+      {
+        "component": "text",
+        "name": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "component": "text",
+        "name": "cta_link",
+        "label": "CTA Link"
+      },
+      {
+        "component": "checkbox",
+        "name": "behavior_openInNewTab",
+        "label": "Open In New Tab"
+      },
+      {
+        "component": "text",
+        "name": "behavior_ariaLabel",
+        "label": "ARIA Label"
+      },
+      {
+        "component": "select",
+        "name": "shape",
+        "label": "Shape",
+        "value": "rectangle",
+        "options": [
+          {
+            "name": "Rectangle",
+            "value": "rectangle"
+          },
+          {
+            "name": "Rounded",
+            "value": "rounded"
+          },
+          {
+            "name": "Pill",
+            "value": "pill"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "style_backgroundColor",
+        "label": "Background Color"
+      },
+      {
+        "component": "text",
+        "name": "style_textColor",
+        "label": "Text Color"
+      },
+      {
+        "component": "text",
+        "name": "style_borderColor",
+        "label": "Border Color"
+      },
+      {
+        "component": "select",
+        "name": "behavior_arrowDirection",
+        "label": "Arrow",
+        "value": "none",
+        "options": [
+          {
+            "name": "None",
+            "value": "none"
+          },
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -212,6 +311,32 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "product-showcase",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description"
+      },
+      {
+        "component": "text",
+        "name": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "component": "text",
+        "name": "cta_link",
+        "label": "CTA Link"
       }
     ]
   }
