@@ -217,11 +217,6 @@
         "label": "Open In New Tab"
       },
       {
-        "component": "text",
-        "name": "behavior_ariaLabel",
-        "label": "ARIA Label"
-      },
-      {
         "component": "select",
         "name": "shape",
         "label": "Shape",
@@ -242,24 +237,24 @@
         ]
       },
       {
-        "component": "text",
+        "component": "color-picker",
         "name": "style_backgroundColor",
         "label": "Background Color"
       },
       {
-        "component": "text",
+        "component": "color-picker",
         "name": "style_textColor",
         "label": "Text Color"
       },
       {
-        "component": "text",
+        "component": "color-picker",
         "name": "style_borderColor",
         "label": "Border Color"
       },
       {
         "component": "select",
         "name": "behavior_arrowDirection",
-        "label": "Arrow",
+        "label": "Arrow Direction",
         "value": "none",
         "options": [
           {
