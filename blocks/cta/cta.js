@@ -105,13 +105,13 @@ function createArrow(direction) {
 
   const span = document.createElement('span');
 
-  span.className = `cmp-cta__arrow cmp-cta__arrow--${direction}`;
+  span.className = `cmp-cta-arrow cmp-cta-arrow-${direction}`;
   span.setAttribute('aria-hidden', 'true');
 
   span.innerHTML = direction === 'left'
     ? `
       <svg
-        class="cmp-cta__arrow-icon"
+        class="cmp-cta-arrow-icon"
         viewBox="0 0 24 24"
         focusable="false">
         <path
@@ -126,7 +126,7 @@ function createArrow(direction) {
     `
     : `
       <svg
-        class="cmp-cta__arrow-icon"
+        class="cmp-cta-arrow-icon"
         viewBox="0 0 24 24"
         focusable="false">
         <path

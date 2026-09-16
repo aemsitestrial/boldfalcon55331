@@ -1,28 +1,20 @@
 .cmp-cta {
   box-sizing: border-box;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   width: auto;
   max-width: 100%;
-
   gap: 0.5rem;
   padding: 0.75rem 1.25rem;
-
   text-decoration: none;
   cursor: pointer;
-
   color: #000;
   background-color: transparent;
-
   border: 1px solid transparent;
   border-radius: 0;
-
   font: inherit;
   line-height: 1.2;
-
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
@@ -49,7 +41,7 @@
    TEXT
    ========================================================== */
 
-.cmp-cta__text {
+.cmp-cta-text {
   display: inline-block;
   min-width: 0;
   overflow-wrap: anywhere;
@@ -59,25 +51,21 @@
    ARROWS
    ========================================================== */
 
-.cmp-cta__arrow {
+.cmp-cta-arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   flex: 0 0 auto;
-
   line-height: 1;
-
   transition:
     transform 180ms ease,
     opacity 180ms ease;
 }
 
-.cmp-cta__arrow-icon {
+.cmp-cta-arrow-icon {
   width: 1em;
   height: 1em;
   display: block;
-
   color: inherit;
 }
 
@@ -89,11 +77,11 @@
   transform: translateY(-1px);
 }
 
-.cmp-cta:hover .cmp-cta__arrow--right {
+.cmp-cta:hover .cmp-cta-arrow-right {
   transform: translateX(3px);
 }
 
-.cmp-cta:hover .cmp-cta__arrow--left {
+.cmp-cta:hover .cmp-cta-arrow-left {
   transform: translateX(-3px);
 }
 
@@ -101,13 +89,17 @@
    FOCUS
    ========================================================== */
 
+.cmp-cta:active {
+  transform: translateY(0);
+}
+
 .cmp-cta:focus {
-  outline: 3px solid currentColor;
+  outline: 3px solid currentcolor;
   outline-offset: 3px;
 }
 
 .cmp-cta:focus-visible {
-  outline: 3px solid currentColor;
+  outline: 3px solid currentcolor;
   outline-offset: 3px;
 }
 
@@ -119,17 +111,13 @@
    ACTIVE
    ========================================================== */
 
-.cmp-cta:active {
-  transform: translateY(0);
-}
-
 /* ==========================================================
    REDUCED MOTION
    ========================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   .cmp-cta,
-  .cmp-cta__arrow {
+  .cmp-cta-arrow {
     transition: none;
   }
 
@@ -137,8 +125,8 @@
     transform: none;
   }
 
-  .cmp-cta:hover .cmp-cta__arrow--right,
-  .cmp-cta:hover .cmp-cta__arrow--left {
+  .cmp-cta:hover .cmp-cta-arrow-right,
+  .cmp-cta:hover .cmp-cta-arrow-left {
     transform: none;
   }
 }
@@ -147,12 +135,12 @@
    MOBILE
    ========================================================== */
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .cmp-cta {
     max-width: 100%;
   }
 
-  .cmp-cta__text {
+  .cmp-cta-text {
     overflow-wrap: anywhere;
   }
 }
