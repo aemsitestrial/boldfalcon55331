@@ -41,27 +41,34 @@
 }
 
 /* Shape: Rounded */
-
 .cmp-cta-rounded {
   border-radius: 0.5rem;
 }
 
 /* Shape: Pill */
-
 .cmp-cta-pill {
   border-radius: 9999px;
 }
 
 /* Hover */
-
 .cmp-cta:hover {
   transform: translateY(-2px);
 }
 
 /* Focus */
-
 .cmp-cta:focus {
-  outline: 3px solid currentColor;
+  outline: 3px solid currentcolor;
+  outline-offset: 3px;
+}
+
+/* Active */
+.cmp-cta:active {
+  transform: translateY(0);
+}
+
+
+.cmp-cta:focus-visible {
+  outline: 3px solid currentcolor;
   outline-offset: 3px;
 }
 
@@ -69,16 +76,6 @@
   outline: none;
 }
 
-.cmp-cta:focus-visible {
-  outline: 3px solid currentColor;
-  outline-offset: 3px;
-}
-
-/* Active */
-
-.cmp-cta:active {
-  transform: translateY(0);
-}
 
 /* Keyboard focus should remain visible even when
    the CTA is hovered. */
@@ -88,7 +85,6 @@
 }
 
 /* Mobile */
-
 @media (max-width: 600px) {
   .cmp-cta {
     width: auto;
@@ -98,7 +94,6 @@
 }
 
 /* Very narrow screens */
-
 @media (max-width: 360px) {
   .cmp-cta {
     width: 100%;
