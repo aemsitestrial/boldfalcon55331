@@ -5,15 +5,11 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-
   box-sizing: border-box;
   max-width: 100%;
-
   padding: 0.75rem 1.25rem;
-
   border: 1px solid transparent;
   border-radius: 0;
-
   font: inherit;
   font-weight: 600;
   line-height: 1.25;
@@ -21,16 +17,13 @@
   text-decoration: none;
   white-space: normal;
   overflow-wrap: anywhere;
-
   cursor: pointer;
-
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
     background-color 160ms ease,
     color 160ms ease,
     border-color 160ms ease;
-
   -webkit-tap-highlight-color: transparent;
 }
 
