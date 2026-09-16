@@ -1,86 +1,177 @@
-function getFields(block) {
-  const rows = [...block.children];
+/**
+ * Convert an authored value to a boolean.
+ *
+ * @param {string} value authored value
+ * @returns {boolean} parsed boolean
+ */
+function parseBoolean(value) {
+  if (!value) {
+    return false;
+  }
 
-  const fields = {};
-
-  rows.forEach((row) => {
-    const cols = [...row.children];
-
-    if (cols.length >= 2) {
-      const key = cols[0].textContent.trim();
-      const value = cols[1].textContent.trim();
-
-      fields[key] = value;
-    }
-  });
-
-  return fields;
+  return [
+    'true',
+    '1',
+    'yes',
+    'on',
+  ].includes(value.trim().toLowerCase());
 }
 
-function getSafeHref(href) {
-  const value = href.trim();
+/**
+ * Extract authored CTA fields from the block.
+ *
+ * @param {HTMLElement} block CTA block
+ * @returns {Object} authored CTA fields
+ */
+function getAuthoredFields(block) {
+  const fields = Array.from(block.children);
+
+  return {
+    ctaText: fields[0]?.textContent?.trim() || '',
+    ctaLink: fields[1]?.textContent?.trim() || '',
+    openInNewTab: parseBoolean(fields[2]?.textContent),
+    shape: fields[3]?.textContent?.trim() || 'rectangle',
+    backgroundColor: fields[4]?.textContent?.trim() || '',
+    textColor: fields[5]?.textContent?.trim() || '',
+    borderColor: fields[6]?.textContent?.trim() || '',
+    arrowDirection: fields[7]?.textContent?.trim() || 'none',
+  };
+}
+
+/**
+ * Safely handle an authored CTA URL.
+ *
+ * Supported:
+ * - https://
+ * - http://
+ * - mailto:
+ * - tel:
+ * - internal links beginning with /
+ *
+ * @param {string} value authored URL
+ * @returns {string} normalized URL
+ */
+function getSafeUrl(value) {
+  const url = value.trim();
+
+  if (!url) {
+    return '#';
+  }
 
   if (
-    value.startsWith('http://')
-    || value.startsWith('https://')
-    || value.startsWith('mailto:')
-    || value.startsWith('tel:')
-    || value.startsWith('/')
+    url.startsWith('https://')
+    || url.startsWith('http://')
+    || url.startsWith('mailto:')
+    || url.startsWith('tel:')
+    || url.startsWith('/')
   ) {
-    return value;
+    return url;
   }
 
-  return `https://${value}`;
+  return `https://${url}`;
 }
 
-function getShape(shape) {
-  const allowed = ['rectangle', 'rounded', 'pill'];
+/**
+ * Get the CSS class for the authored CTA shape.
+ *
+ * @param {string} shape authored shape
+ * @returns {string} shape CSS class
+ */
+function getShapeClass(shape) {
+  switch (shape) {
+    case 'rounded':
+      return 'cmp-cta-rounded';
 
-  return allowed.includes(shape)
-    ? shape
-    : 'rectangle';
-}
+    case 'pill':
+      return 'cmp-cta-pill';
 
-function getLabel(text, direction) {
-  if (direction === 'left') {
-    return `← ${text}`;
+    case 'rectangle':
+    default:
+      return 'cmp-cta-rectangle';
   }
-
-  if (direction === 'right') {
-    return `${text} →`;
-  }
-
-  return text;
 }
 
+/**
+ * Get the arrow character for the authored direction.
+ *
+ * @param {string} direction authored arrow direction
+ * @returns {string} arrow character
+ */
+function getArrowText(direction) {
+  switch (direction) {
+    case 'left':
+      return '←';
+
+    case 'right':
+      return '→';
+
+    case 'none':
+    default:
+      return '';
+  }
+}
+
+/**
+ * Apply an authored color to an element.
+ *
+ * @param {HTMLElement} element target element
+ * @param {string} property CSS property
+ * @param {string} value authored color
+ */
+function applyColor(element, property, value) {
+  if (value) {
+    element.style.setProperty(property, value);
+  }
+}
+
+/**
+ * Decorate CTA block.
+ *
+ * @param {HTMLElement} block CTA block
+ */
 export default function decorate(block) {
-  const fields = getFields(block);
-
-  if (!fields.cta_text || !fields.cta_link) {
-    return;
-  }
+  const fields = getAuthoredFields(block);
 
   const link = document.createElement('a');
 
-  link.className = `cmp-cta cmp-cta-${getShape(fields.shape)}`;
-  link.href = getSafeHref(fields.cta_link);
-  link.textContent = getLabel(fields.cta_text, fields.behavior_arrowDirection);
+  link.classList.add(
+    'cmp-cta',
+    getShapeClass(fields.shape),
+  );
 
-  if (fields.behavior_openInNewTab === 'true') {
+  link.href = getSafeUrl(fields.ctaLink);
+
+  if (fields.openInNewTab) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
   }
 
-  if (fields.style_backgroundColor) {
-    link.style.backgroundColor = fields.style_backgroundColor;
-  }
+  applyColor(
+    link,
+    'background-color',
+    fields.backgroundColor,
+  );
 
-  if (fields.style_textColor) {
-    link.style.color = fields.style_textColor;
-  }
+  applyColor(
+    link,
+    'color',
+    fields.textColor,
+  );
 
-  if (fields.style_borderColor) {
-    link.style.borderColor = fields.style_borderColor;
+  applyColor(
+    link,
+    'border-color',
+    fields.borderColor,
+  );
+
+  const arrow = getArrowText(fields.arrowDirection);
+
+  if (fields.arrowDirection === 'left') {
+    link.textContent = `${arrow} ${fields.ctaText}`;
+  } else if (fields.arrowDirection === 'right') {
+    link.textContent = `${fields.ctaText} ${arrow}`;
+  } else {
+    link.textContent = fields.ctaText;
   }
 
   block.replaceChildren(link);

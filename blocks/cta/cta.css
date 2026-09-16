@@ -1,105 +1,74 @@
+/* CTA base */
+
 .cmp-cta {
-  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: auto;
-  max-width: 100%;
   gap: 0.5rem;
+
+  box-sizing: border-box;
+  max-width: 100%;
+
   padding: 0.75rem 1.25rem;
-  text-decoration: none;
-  cursor: pointer;
-  color: #000;
-  background-color: transparent;
+
   border: 1px solid transparent;
   border-radius: 0;
+
   font: inherit;
-  line-height: 1.2;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+
+  cursor: pointer;
+
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
-    filter 160ms ease;
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* ==========================================================
-   SHAPES
-   ========================================================== */
+/* Prevent the browser's default visited color from
+   overriding an authored CTA text color. */
+
+.cmp-cta:visited {
+  color: inherit;
+}
+
+/* Shape: Rectangle */
 
 .cmp-cta-rectangle {
   border-radius: 0;
 }
 
+/* Shape: Rounded */
+
 .cmp-cta-rounded {
-  border-radius: 0.375rem;
+  border-radius: 0.5rem;
 }
+
+/* Shape: Pill */
 
 .cmp-cta-pill {
   border-radius: 9999px;
 }
 
-/* ==========================================================
-   TEXT
-   ========================================================== */
-
-.cmp-cta-text {
-  display: inline-block;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-/* ==========================================================
-   ARROWS
-   ========================================================== */
-
-.cmp-cta-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  line-height: 1;
-  transition:
-    transform 180ms ease,
-    opacity 180ms ease;
-}
-
-.cmp-cta-arrow-icon {
-  width: 1em;
-  height: 1em;
-  display: block;
-  color: inherit;
-}
-
-/* ==========================================================
-   HOVER
-   ========================================================== */
+/* Hover */
 
 .cmp-cta:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
-.cmp-cta:hover .cmp-cta-arrow-right {
-  transform: translateX(3px);
-}
-
-.cmp-cta:hover .cmp-cta-arrow-left {
-  transform: translateX(-3px);
-}
-
-/* ==========================================================
-   FOCUS
-   ========================================================== */
-
-.cmp-cta:active {
-  transform: translateY(0);
-}
+/* Focus */
 
 .cmp-cta:focus {
-  outline: 3px solid currentcolor;
-  outline-offset: 3px;
-}
-
-.cmp-cta:focus-visible {
-  outline: 3px solid currentcolor;
+  outline: 3px solid currentColor;
   outline-offset: 3px;
 }
 
@@ -107,40 +76,52 @@
   outline: none;
 }
 
-/* ==========================================================
-   ACTIVE
-   ========================================================== */
+.cmp-cta:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
 
-/* ==========================================================
-   REDUCED MOTION
-   ========================================================== */
+/* Active */
 
-@media (prefers-reduced-motion: reduce) {
-  .cmp-cta,
-  .cmp-cta-arrow {
-    transition: none;
-  }
+.cmp-cta:active {
+  transform: translateY(0);
+}
 
-  .cmp-cta:hover {
-    transform: none;
-  }
+/* Keyboard focus should remain visible even when
+   the CTA is hovered. */
 
-  .cmp-cta:hover .cmp-cta-arrow-right,
-  .cmp-cta:hover .cmp-cta-arrow-left {
-    transform: none;
+.cmp-cta:hover:focus-visible {
+  transform: translateY(-2px);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .cmp-cta {
+    width: auto;
+    max-width: 100%;
+    padding: 0.7rem 1rem;
   }
 }
 
-/* ==========================================================
-   MOBILE
-   ========================================================== */
+/* Very narrow screens */
 
-@media (width <= 767px) {
+@media (max-width: 360px) {
   .cmp-cta {
-    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .cmp-cta {
+    transition: none;
   }
 
-  .cmp-cta-text {
-    overflow-wrap: anywhere;
+  .cmp-cta:hover,
+  .cmp-cta:active,
+  .cmp-cta:hover:focus-visible {
+    transform: none;
   }
 }

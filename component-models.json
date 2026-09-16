@@ -204,22 +204,29 @@
       {
         "component": "text",
         "name": "cta_text",
-        "label": "CTA Text"
+        "label": "CTA Text",
+        "valueType": "string",
+        "required": true
       },
       {
         "component": "text",
         "name": "cta_link",
-        "label": "CTA Link"
+        "label": "CTA Link",
+        "valueType": "string",
+        "required": true
       },
       {
         "component": "checkbox",
         "name": "behavior_openInNewTab",
-        "label": "Open In New Tab"
+        "label": "Open In New Tab",
+        "valueType": "boolean",
+        "value": false
       },
       {
         "component": "select",
         "name": "shape",
         "label": "Shape",
+        "valueType": "string",
         "value": "rectangle",
         "options": [
           {
@@ -239,22 +246,26 @@
       {
         "component": "color-picker",
         "name": "style_backgroundColor",
-        "label": "Background Color"
+        "label": "Background Color",
+        "valueType": "string"
       },
       {
         "component": "color-picker",
         "name": "style_textColor",
-        "label": "Text Color"
+        "label": "Text Color",
+        "valueType": "string"
       },
       {
         "component": "color-picker",
         "name": "style_borderColor",
-        "label": "Border Color"
+        "label": "Border Color",
+        "valueType": "string"
       },
       {
         "component": "select",
         "name": "behavior_arrowDirection",
         "label": "Arrow Direction",
+        "valueType": "string",
         "value": "none",
         "options": [
           {
