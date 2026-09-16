@@ -1,66 +1,84 @@
-export default function decorate(block) {
-  const data = {};
-  [...block.children].forEach((row) => {
-    const cols = row.querySelectorAll('div');
+const FIELD_NAMES = new Set([
+  'ctaText',
+  'ctaLink',
+  'shape',
+  'backgroundColor',
+  'textColor',
+  'borderColor',
+  'arrowDirection',
+  'ariaLabel',
+  'openInNewTab',
+]);
 
-    if (cols.length < 2) {
-      return;
+function readFields(block) {
+  return [...block.children].reduce((fields, row) => {
+    const columns = row.children;
+    const key = columns[0]?.textContent.trim();
+    const value = columns[1]?.textContent.trim();
+
+    if (FIELD_NAMES.has(key) && value) {
+      fields[key] = value;
     }
 
-    const key = cols[0].textContent.trim();
-    const value = cols[1].textContent.trim();
+    return fields;
+  }, {});
+}
 
-    data[key] = value;
-  });
-
-  const {
-    ctaText,
-    ctaLink,
-    shape,
-    backgroundColor,
-    textColor,
-    borderColor,
-    arrowDirection,
-    ariaLabel,
-    openInNewTab,
-  } = data;
-
-  const a = document.createElement('a');
-
-  a.href = ctaLink;
-  a.className = `cmp-cta cmp-cta-${shape || 'rectangle'}`;
-
-  a.textContent = ctaText;
-
-  if (openInNewTab === 'true') {
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
+function getSafeHref(value) {
+  if (!value) {
+    return '#';
   }
 
-  if (ariaLabel) {
-    a.setAttribute('aria-label', ariaLabel);
+  try {
+    const url = new URL(value, window.location.href);
+    const allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:'];
+
+    return allowedProtocols.includes(url.protocol) ? value : '#';
+  } catch (error) {
+    return '#';
+  }
+}
+
+function getLabel(text, direction) {
+  if (direction === 'left') {
+    return `← ${text}`;
   }
 
-  if (backgroundColor) {
-    a.style.backgroundColor = backgroundColor;
+  if (direction === 'right') {
+    return `${text} →`;
   }
 
-  if (textColor) {
-    a.style.color = textColor;
+  return text;
+}
+
+export default function decorate(block) {
+  const fields = readFields(block);
+  const link = document.createElement('a');
+
+  link.href = getSafeHref(fields.ctaLink);
+  link.className = `cmp-cta cmp-cta-${fields.shape || 'rectangle'}`;
+  link.textContent = getLabel(fields.ctaText || '', fields.arrowDirection);
+
+  if (fields.openInNewTab === 'true') {
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
   }
 
-  if (borderColor) {
-    a.style.borderColor = borderColor;
+  if (fields.ariaLabel) {
+    link.setAttribute('aria-label', fields.ariaLabel);
   }
 
-  if (arrowDirection === 'right') {
-    a.textContent = `${a.textContent} →`;
+  if (fields.backgroundColor) {
+    link.style.backgroundColor = fields.backgroundColor;
   }
 
-  if (arrowDirection === 'left') {
-    a.textContent = `← ${a.textContent}`;
+  if (fields.textColor) {
+    link.style.color = fields.textColor;
   }
 
-  block.textContent = '';
-  block.append(a);
+  if (fields.borderColor) {
+    link.style.borderColor = fields.borderColor;
+  }
+
+  block.replaceChildren(link);
 }
