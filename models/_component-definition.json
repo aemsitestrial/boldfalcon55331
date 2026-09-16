@@ -14,12 +14,6 @@
           "...": "./_image.json#/definitions"
         },
         {
-          "...": "./_cta.json#/definitions"
-        },
-        {
-          "...": "./_cardsCopy.json#/definitions"
-        },
-        {
           "...": "./_button.json#/definitions"
         }
       ]

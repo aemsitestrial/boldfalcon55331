@@ -19,11 +19,5 @@
   },
   {
     "...": "../blocks/*/_*.json#/models"
-  },
-  {
-    "...": "./_cta.json#/models"
-  },
-  {
-    "...": "./_cardsCopy.json#/models"
   }
 ]
