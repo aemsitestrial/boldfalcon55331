@@ -49,8 +49,11 @@
         "title",
         "hero",
         "cards",
+        "cardsCopy",
         "columns",
-        "fragment"
+        "fragment",
+        "cta",
+        "product-showcase"
       ]
     }
   ]

@@ -11,17 +11,32 @@ const FIELD_NAMES = new Set([
 ]);
 
 function readFields(block) {
-  return [...block.children].reduce((fields, row) => {
+  const rows = [...block.children];
+  const keyValueFields = rows.reduce((fields, row) => {
     const columns = row.children;
     const key = columns[0]?.textContent.trim();
     const value = columns[1]?.textContent.trim();
 
-    if (FIELD_NAMES.has(key) && value) {
-      fields[key] = value;
-    }
-
+    if (FIELD_NAMES.has(key) && value) fields[key] = value;
     return fields;
   }, {});
+
+  if (Object.keys(keyValueFields).length) return keyValueFields;
+
+  const cells = rows.length === 1 ? [...rows[0].children] : rows;
+  const values = cells.map((cell) => cell.textContent.trim());
+
+  return {
+    cta_text: values[0] || '',
+    cta_link: values[1] || '',
+    behavior_openInNewTab: values[2] || '',
+    behavior_ariaLabel: values[3] || '',
+    shape: values[4] || 'rectangle',
+    style_backgroundColor: values[5] || '',
+    style_textColor: values[6] || '',
+    style_borderColor: values[7] || '',
+    behavior_arrowDirection: values[8] || 'none',
+  };
 }
 
 function getSafeHref(value) {
