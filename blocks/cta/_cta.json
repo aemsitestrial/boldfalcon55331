@@ -22,21 +22,21 @@
       "fields": [
         {
           "component": "text",
-          "name": "cta_text",
+          "name": "ctaText",
           "label": "CTA Text",
           "valueType": "string",
           "required": true
         },
         {
           "component": "text",
-          "name": "cta_link",
+          "name": "ctaLink",
           "label": "CTA Link",
           "valueType": "string",
           "required": true
         },
         {
-          "component": "checkbox",
-          "name": "behavior_openInNewTab",
+          "component": "boolean",
+          "name": "behaviorOpenInNewTab",
           "label": "Open In New Tab",
           "valueType": "boolean",
           "value": false
@@ -63,26 +63,26 @@
           ]
         },
         {
-          "component": "color-picker",
-          "name": "style_backgroundColor",
+          "component": "text",
+          "name": "styleBackgroundColor",
           "label": "Background Color",
           "valueType": "string"
         },
         {
-          "component": "color-picker",
-          "name": "style_textColor",
+          "component": "text",
+          "name": "styleTextColor",
           "label": "Text Color",
           "valueType": "string"
         },
         {
-          "component": "color-picker",
-          "name": "style_borderColor",
+          "component": "text",
+          "name": "styleBorderColor",
           "label": "Border Color",
           "valueType": "string"
         },
         {
           "component": "select",
-          "name": "behavior_arrowDirection",
+          "name": "behaviorArrowDirection",
           "label": "Arrow Direction",
           "valueType": "string",
           "value": "none",
