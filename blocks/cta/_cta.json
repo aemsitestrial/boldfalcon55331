@@ -16,7 +16,6 @@
       }
     }
   ],
-
   "models": [
     {
       "id": "cta",
@@ -39,7 +38,8 @@
         {
           "component": "text",
           "name": "behavior_ariaLabel",
-          "label": "ARIA Label"
+          "label": "ARIA Label",
+          "description": "Optional accessible label. If empty, CTA Text will be used."
         },
         {
           "component": "select",
@@ -62,24 +62,24 @@
           ]
         },
         {
-          "component": "text",
+          "component": "color-picker",
           "name": "style_backgroundColor",
           "label": "Background Color"
         },
         {
-          "component": "text",
+          "component": "color-picker",
           "name": "style_textColor",
           "label": "Text Color"
         },
         {
-          "component": "text",
+          "component": "color-picker",
           "name": "style_borderColor",
           "label": "Border Color"
         },
         {
           "component": "select",
           "name": "behavior_arrowDirection",
-          "label": "Arrow",
+          "label": "Arrow Direction",
           "value": "none",
           "options": [
             {
