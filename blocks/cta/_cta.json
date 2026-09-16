@@ -35,10 +35,9 @@
           "required": true
         },
         {
-          "component": "boolean",
+          "component": "checkbox",
           "name": "behaviorOpenInNewTab",
           "label": "Open In New Tab",
-          "valueType": "boolean",
           "value": false
         },
         {

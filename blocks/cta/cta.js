@@ -1,58 +1,26 @@
 /**
- * Convert an authored value to a boolean.
+ * Convert authored value to boolean.
  *
- * @param {string} value authored value
- * @returns {boolean} parsed boolean
+ * @param {string|boolean} value
+ * @returns {boolean}
  */
 function parseBoolean(value) {
-  if (!value) {
-    return false;
+  if (typeof value === 'boolean') {
+    return value;
   }
 
-  return [
-    'true',
-    '1',
-    'yes',
-    'on',
-  ].includes(value.trim().toLowerCase());
+  return ['true', '1', 'yes', 'on']
+    .includes(String(value).trim().toLowerCase());
 }
 
 /**
- * Extract authored CTA fields from the block.
+ * Normalise URL.
  *
- * @param {HTMLElement} block CTA block
- * @returns {Object} authored CTA fields
- */
-function getAuthoredFields(block) {
-  const fields = Array.from(block.children);
-
-  return {
-    ctaText: fields[0]?.textContent?.trim() || '',
-    ctaLink: fields[1]?.textContent?.trim() || '',
-    openInNewTab: parseBoolean(fields[2]?.textContent),
-    shape: fields[3]?.textContent?.trim() || 'rectangle',
-    backgroundColor: fields[4]?.textContent?.trim() || '',
-    textColor: fields[5]?.textContent?.trim() || '',
-    borderColor: fields[6]?.textContent?.trim() || '',
-    arrowDirection: fields[7]?.textContent?.trim() || 'none',
-  };
-}
-
-/**
- * Safely handle an authored CTA URL.
- *
- * Supported:
- * - https://
- * - http://
- * - mailto:
- * - tel:
- * - internal links beginning with /
- *
- * @param {string} value authored URL
- * @returns {string} normalized URL
+ * @param {string} value
+ * @returns {string}
  */
 function getSafeUrl(value) {
-  const url = value.trim();
+  const url = (value || '').trim();
 
   if (!url) {
     return '#';
@@ -72,13 +40,13 @@ function getSafeUrl(value) {
 }
 
 /**
- * Get the CSS class for the authored CTA shape.
+ * Shape CSS class.
  *
- * @param {string} shape authored shape
- * @returns {string} shape CSS class
+ * @param {string} shape
+ * @returns {string}
  */
 function getShapeClass(shape) {
-  switch (shape) {
+  switch ((shape || '').toLowerCase()) {
     case 'rounded':
       return 'cmp-cta-rounded';
 
@@ -92,87 +60,105 @@ function getShapeClass(shape) {
 }
 
 /**
- * Get the arrow character for the authored direction.
+ * Build CTA text with arrow.
  *
- * @param {string} direction authored arrow direction
- * @returns {string} arrow character
+ * @param {string} text
+ * @param {string} direction
+ * @returns {string}
  */
-function getArrowText(direction) {
-  switch (direction) {
+function buildLabel(text, direction) {
+  switch ((direction || '').toLowerCase()) {
     case 'left':
-      return '←';
+      return `← ${text}`;
 
     case 'right':
-      return '→';
+      return `${text} →`;
 
-    case 'none':
     default:
-      return '';
+      return text;
   }
 }
 
 /**
- * Apply an authored color to an element.
+ * Apply style if value is present.
  *
- * @param {HTMLElement} element target element
- * @param {string} property CSS property
- * @param {string} value authored color
+ * @param {HTMLElement} element
+ * @param {string} property
+ * @param {string} value
  */
-function applyColor(element, property, value) {
-  if (value) {
-    element.style.setProperty(property, value);
+function applyStyle(element, property, value) {
+  if (value && value.trim()) {
+    element.style[property] = value.trim();
   }
+}
+
+/**
+ * Read UE-authored fields.
+ *
+ * @param {HTMLElement} block
+ * @returns {Object}
+ */
+function getFields(block) {
+  const values = [...block.children]
+    .map((item) => item.textContent.trim());
+
+  return {
+    ctaText: values[0] || '',
+    ctaLink: values[1] || '',
+    openInNewTab: values[2] || false,
+    shape: values[3] || 'rectangle',
+    backgroundColor: values[4] || '',
+    textColor: values[5] || '',
+    borderColor: values[6] || '',
+    arrowDirection: values[7] || 'none',
+  };
 }
 
 /**
  * Decorate CTA block.
  *
- * @param {HTMLElement} block CTA block
+ * @param {HTMLElement} block
  */
 export default function decorate(block) {
-  const fields = getAuthoredFields(block);
+  const fields = getFields(block);
+
+  if (!fields.ctaText || !fields.ctaLink) {
+    return;
+  }
 
   const link = document.createElement('a');
 
-  link.classList.add(
-    'cmp-cta',
-    getShapeClass(fields.shape),
-  );
+  link.className = `cmp-cta ${getShapeClass(fields.shape)}`;
 
   link.href = getSafeUrl(fields.ctaLink);
 
-  if (fields.openInNewTab) {
+  if (parseBoolean(fields.openInNewTab)) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
   }
 
-  applyColor(
+  applyStyle(
     link,
-    'background-color',
+    'backgroundColor',
     fields.backgroundColor,
   );
 
-  applyColor(
+  applyStyle(
     link,
     'color',
     fields.textColor,
   );
 
-  applyColor(
+  applyStyle(
     link,
-    'border-color',
+    'borderColor',
     fields.borderColor,
   );
 
-  const arrow = getArrowText(fields.arrowDirection);
-
-  if (fields.arrowDirection === 'left') {
-    link.textContent = `${arrow} ${fields.ctaText}`;
-  } else if (fields.arrowDirection === 'right') {
-    link.textContent = `${fields.ctaText} ${arrow}`;
-  } else {
-    link.textContent = fields.ctaText;
-  }
+  link.textContent = buildLabel(
+    fields.ctaText,
+    fields.arrowDirection,
+  );
 
   block.replaceChildren(link);
 }
