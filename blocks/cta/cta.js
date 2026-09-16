@@ -1,118 +1,63 @@
-const FIELD_NAMES = new Set([
-  'cta_text',
-  'cta_link',
-  'shape',
-  'style_backgroundColor',
-  'style_textColor',
-  'style_borderColor',
-  'behavior_arrowDirection',
-  'behavior_ariaLabel',
-  'behavior_openInNewTab',
-]);
-
-function readFields(block) {
+function getFields(block) {
   const rows = [...block.children];
 
-  const keyValueFields = rows.reduce((fields, row) => {
-    const columns = row.children;
+  const fields = {};
 
-    const key = columns[0]?.textContent.trim();
-    const value = columns[1]?.textContent.trim();
+  rows.forEach((row) => {
+    const cols = [...row.children];
 
-    if (FIELD_NAMES.has(key) && value) {
+    if (cols.length >= 2) {
+      const key = cols[0].textContent.trim();
+      const value = cols[1].textContent.trim();
+
       fields[key] = value;
     }
+  });
 
-    return fields;
-  }, {});
-
-  if (Object.keys(keyValueFields).length) {
-    return keyValueFields;
-  }
-
-  const cells = rows.length === 1
-    ? [...rows[0].children]
-    : rows;
-
-  const values = cells.map((cell) => cell.textContent.trim());
-
-  return {
-    cta_text: values[0] || '',
-    cta_link: values[1] || '',
-    behavior_openInNewTab: values[2] || '',
-    behavior_ariaLabel: values[3] || '',
-    shape: values[4] || 'rectangle',
-    style_backgroundColor: values[5] || '',
-    style_textColor: values[6] || '',
-    style_borderColor: values[7] || '',
-    behavior_arrowDirection: values[8] || 'none',
-  };
+  return fields;
 }
 
-function getSafeHref(value) {
-  if (!value) {
+function getSafeHref(href) {
+  if (!href) {
     return '#';
   }
 
-  try {
-    const url = new URL(value, window.location.href);
+  const value = href.trim();
 
-    const allowedProtocols = [
-      'http:',
-      'https:',
-      'mailto:',
-      'tel:',
-    ];
-
-    return allowedProtocols.includes(url.protocol)
-      ? value
-      : '#';
-  } catch (error) {
-    return '#';
-  }
-}
-
-function isValidColor(value) {
-  if (!value) {
-    return false;
+  if (
+    value.startsWith('http://')
+    || value.startsWith('https://')
+    || value.startsWith('mailto:')
+    || value.startsWith('tel:')
+    || value.startsWith('/')
+  ) {
+    return value;
   }
 
-  const hexPattern = /^#[0-9a-fA-F]{3,8}$/;
-
-  const rgbPattern = /^rgba?\(\s*(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\s*,\s*(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\s*,\s*(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\s*,\s*(?:0|1|0?\.\d+))?\s*\)$/i;
-
-  return (
-    hexPattern.test(value) || rgbPattern.test(value)
-  );
+  return `https://${value}`;
 }
 
 function getShape(shape) {
-  const allowedShapes = [
-    'rectangle',
-    'rounded',
-    'pill',
-  ];
+  const allowed = ['rectangle', 'rounded', 'pill'];
 
-  return allowedShapes.includes(shape)
+  return allowed.includes(shape)
     ? shape
     : 'rectangle';
 }
 
 function createArrow(direction) {
-  if (direction === 'none') {
-    return null;
-  }
-
   const span = document.createElement('span');
 
   span.className = `cmp-cta-arrow cmp-cta-arrow-${direction}`;
   span.setAttribute('aria-hidden', 'true');
 
-  span.innerHTML = direction === 'left'
-    ? `
+  if (direction === 'left') {
+    span.innerHTML = `
       <svg
         class="cmp-cta-arrow-icon"
         viewBox="0 0 24 24"
+        width="16"
+        height="16"
         focusable="false">
         <path
           d="M19 12H5M12 19l-7-7 7-7"
@@ -123,11 +68,14 @@ function createArrow(direction) {
           stroke-linejoin="round">
         </path>
       </svg>
-    `
-    : `
+    `;
+  } else {
+    span.innerHTML = `
       <svg
         class="cmp-cta-arrow-icon"
         viewBox="0 0 24 24"
+        width="16"
+        height="16"
         focusable="false">
         <path
           d="M5 12h14M12 5l7 7-7 7"
@@ -139,23 +87,24 @@ function createArrow(direction) {
         </path>
       </svg>
     `;
+  }
 
   return span;
 }
 
 export default function decorate(block) {
-  const fields = readFields(block);
+  const fields = getFields(block);
 
-  const shape = getShape(fields.shape);
+  if (!fields.cta_text || !fields.cta_link) {
+    return;
+  }
 
   const link = document.createElement('a');
 
+  link.className = `cmp-cta cmp-cta-${getShape(fields.shape)}`;
   link.href = getSafeHref(fields.cta_link);
 
-  link.className = `cmp-cta cmp-cta-${shape}`;
-
-  if (fields.behavior_openInNewTab === true
-    || fields.behavior_openInNewTab === 'true') {
+  if (fields.behavior_openInNewTab === 'true') {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
   }
@@ -165,41 +114,31 @@ export default function decorate(block) {
     fields.behavior_ariaLabel || fields.cta_text,
   );
 
-  if (isValidColor(fields.style_backgroundColor)) {
+  if (fields.style_backgroundColor) {
     link.style.backgroundColor = fields.style_backgroundColor;
   }
 
-  if (isValidColor(fields.style_textColor)) {
+  if (fields.style_textColor) {
     link.style.color = fields.style_textColor;
   }
 
-  if (isValidColor(fields.style_borderColor)) {
+  if (fields.style_borderColor) {
     link.style.borderColor = fields.style_borderColor;
   }
 
-  const direction = fields.behavior_arrowDirection || 'none';
-
-  if (direction === 'left') {
-    const leftArrow = createArrow('left');
-
-    if (leftArrow) {
-      link.append(leftArrow);
-    }
+  if (fields.behavior_arrowDirection === 'left') {
+    link.append(createArrow('left'));
   }
 
   const text = document.createElement('span');
 
-  text.className = 'cmp-cta__text';
-  text.textContent = fields.cta_text || '';
+  text.className = 'cmp-cta-text';
+  text.textContent = fields.cta_text;
 
   link.append(text);
 
-  if (direction === 'right') {
-    const rightArrow = createArrow('right');
-
-    if (rightArrow) {
-      link.append(rightArrow);
-    }
+  if (fields.behavior_arrowDirection === 'right') {
+    link.append(createArrow('right'));
   }
 
   block.replaceChildren(link);
