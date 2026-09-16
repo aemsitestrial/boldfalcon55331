@@ -46,7 +46,7 @@
 
 /* Keyboard focus */
 .cmp-cta:focus-visible {
-  outline: 3px solid currentColor;
+  outline: 3px solid currentcolor;
   outline-offset: 3px;
 }
 
@@ -62,7 +62,7 @@
 }
 
 /* Mobile */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .cmp-cta {
     width: auto;
     max-width: 100%;
@@ -73,7 +73,7 @@
 }
 
 /* Very small screens */
-@media (max-width: 360px) {
+@media (width <= 360px) {
   .cmp-cta {
     width: 100%;
   }
