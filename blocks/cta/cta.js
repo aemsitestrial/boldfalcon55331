@@ -1,5 +1,5 @@
 const DEFAULTS = {
-  ctaText: '',
+  text_cta: '',
   ctaLink: '',
   openInNewTab: false,
   ariaLabel: '',
@@ -120,10 +120,10 @@ function createArrow(direction) {
 
 function readBlockContent(block) {
   return {
-    ctaText: getFieldValue(
+    text_cta: getFieldValue(
       block,
       0,
-      DEFAULTS.ctaText,
+      DEFAULTS.text_cta,
     ),
 
     ctaLink: getFieldValue(
@@ -181,7 +181,7 @@ function readBlockContent(block) {
 }
 
 function createCta(data) {
-  if (!data.ctaText || !data.ctaLink) {
+  if (!data.text_cta || !data.ctaLink) {
     return null;
   }
 
@@ -196,7 +196,7 @@ function createCta(data) {
 
   link.setAttribute(
     'aria-label',
-    data.ariaLabel || data.ctaText,
+    data.ariaLabel || data.text_cta,
   );
 
   if (data.openInNewTab) {
@@ -225,7 +225,7 @@ function createCta(data) {
   const text = document.createElement('span');
 
   text.className = 'cta-text';
-  text.textContent = data.ctaText;
+  text.textContent = data.text_cta;
 
   link.appendChild(text);
 

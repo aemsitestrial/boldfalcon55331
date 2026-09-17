@@ -30,7 +30,5 @@ module.exports = {
       '*': 4,
       cta: 9,
     }],
-
-    'xwalk/no-orphan-collapsible-fields': 'off',
   },
 };

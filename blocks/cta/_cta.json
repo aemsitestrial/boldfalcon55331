@@ -23,7 +23,7 @@
         {
           "component": "text",
           "valueType": "string",
-          "name": "ctaText",
+          "name": "text_cta",
           "label": "CTA Text",
           "value": "",
           "required": true,
