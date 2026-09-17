@@ -1,203 +1,252 @@
-/**
- * CTA Block
- *
- * Reads the values authored through Universal Editor
- * and renders exactly one anchor element.
- */
+const DEFAULTS = {
+  ctaText: '',
+  ctaLink: '',
+  openInNewTab: false,
+  ariaLabel: '',
+  shape: 'rectangle',
+  backgroundColor: '',
+  textColor: '',
+  borderColor: '',
+  arrowDirection: 'none',
+};
 
-/**
- * Get clean text from an authored field row.
- *
- * Universal Editor exposes model fields as child elements
- * of the block in field order.
- *
- * @param {Element} row authored field row
- * @returns {string} field value
- */
-function getFieldValue(row) {
-  if (!row) {
-    return '';
+const ALLOWED_SHAPES = new Set([
+  'rectangle',
+  'rounded',
+  'pill',
+]);
+
+const ALLOWED_ARROWS = new Set([
+  'none',
+  'left',
+  'right',
+]);
+
+function getFieldValue(block, index, fallback = '') {
+  const field = block.children[index];
+
+  if (!field) {
+    return fallback;
   }
 
-  const input = row.querySelector(
-    'input:not([type="checkbox"]), textarea, select',
+  return field.textContent.trim() || fallback;
+}
+
+function getBooleanFieldValue(block, index, fallback = false) {
+  const value = getFieldValue(block, index, String(fallback));
+
+  return value === 'true';
+}
+
+function normalizeShape(value) {
+  return ALLOWED_SHAPES.has(value)
+    ? value
+    : DEFAULTS.shape;
+}
+
+function normalizeArrow(value) {
+  return ALLOWED_ARROWS.has(value)
+    ? value
+    : DEFAULTS.arrowDirection;
+}
+
+function isValidCssColor(value) {
+  if (!value) {
+    return true;
+  }
+
+  const probe = document.createElement('span');
+
+  probe.style.color = '';
+  probe.style.color = value;
+
+  return probe.style.color !== '';
+}
+
+function createArrow(direction) {
+  const wrapper = document.createElement('span');
+
+  wrapper.className = `cta-arrow cta-arrow-${direction}`;
+  wrapper.setAttribute('aria-hidden', 'true');
+
+  const svg = document.createElementNS(
+    'http://www.w3.org/2000/svg',
+    'svg',
   );
 
-  if (input) {
-    return String(input.value || '').trim();
+  svg.classList.add('cta-arrow-icon');
+
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('width', '1em');
+  svg.setAttribute('height', '1em');
+  svg.setAttribute('focusable', 'false');
+  svg.setAttribute('aria-hidden', 'true');
+
+  const path = document.createElementNS(
+    'http://www.w3.org/2000/svg',
+    'path',
+  );
+
+  if (direction === 'left') {
+    path.setAttribute('d', 'M19 12H5M12 19l-7-7 7-7');
+  } else {
+    path.setAttribute('d', 'M5 12h14M12 5l7 7-7 7');
   }
 
-  return String(row.textContent || '').trim();
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke', 'currentColor');
+  path.setAttribute('stroke-width', '2');
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('stroke-linejoin', 'round');
+
+  svg.append(path);
+  wrapper.append(svg);
+
+  return wrapper;
 }
 
-/**
- * Convert an authored boolean value to a real boolean.
- *
- * @param {Element} row authored boolean field
- * @returns {boolean} boolean value
- */
-function getBooleanValue(row) {
-  if (!row) {
-    return false;
-  }
-
-  const checkbox = row.querySelector('input[type="checkbox"]');
-
-  if (checkbox) {
-    return checkbox.checked;
-  }
-
-  const value = getFieldValue(row).toLowerCase();
-
-  return value === 'true' || value === 'yes' || value === '1';
-}
-
-/**
- * Extract all CTA fields from the authored block.
- *
- * @param {Element} block CTA block
- * @returns {Object} authored CTA fields
- */
-function getAuthoredFields(block) {
-  const fields = Array.from(block.children);
-
+function readBlockContent(block) {
   return {
-    ctaText: getFieldValue(fields[0]),
-    ctaLink: getFieldValue(fields[1]),
-    openInNewTab: getBooleanValue(fields[2]),
-    shape: getFieldValue(fields[3]) || 'rectangle',
-    backgroundColor: getFieldValue(fields[4]),
-    textColor: getFieldValue(fields[5]),
-    borderColor: getFieldValue(fields[6]),
-    arrowDirection: getFieldValue(fields[7]) || 'none',
+    ctaText: getFieldValue(
+      block,
+      0,
+      DEFAULTS.ctaText,
+    ),
+
+    ctaLink: getFieldValue(
+      block,
+      1,
+      DEFAULTS.ctaLink,
+    ),
+
+    openInNewTab: getBooleanFieldValue(
+      block,
+      2,
+      DEFAULTS.openInNewTab,
+    ),
+
+    ariaLabel: getFieldValue(
+      block,
+      3,
+      DEFAULTS.ariaLabel,
+    ),
+
+    shape: normalizeShape(
+      getFieldValue(
+        block,
+        4,
+        DEFAULTS.shape,
+      ),
+    ),
+
+    backgroundColor: getFieldValue(
+      block,
+      5,
+      DEFAULTS.backgroundColor,
+    ),
+
+    textColor: getFieldValue(
+      block,
+      6,
+      DEFAULTS.textColor,
+    ),
+
+    borderColor: getFieldValue(
+      block,
+      7,
+      DEFAULTS.borderColor,
+    ),
+
+    arrowDirection: normalizeArrow(
+      getFieldValue(
+        block,
+        8,
+        DEFAULTS.arrowDirection,
+      ),
+    ),
   };
 }
 
-/**
- * Safely handle an authored CTA URL.
- *
- * Supported:
- * - https://
- * - http://
- * - mailto:
- * - tel:
- * - internal URLs beginning with /
- *
- * Anything else receives https://.
- *
- * @param {string} value authored URL
- * @returns {string} safe CTA URL
- */
-function getSafeUrl(value) {
-  const url = String(value || '').trim();
-
-  if (!url) {
-    return '#';
+function createCta(data) {
+  if (!data.ctaText || !data.ctaLink) {
+    return null;
   }
-
-  const lowerUrl = url.toLowerCase();
-
-  if (
-    lowerUrl.startsWith('https://')
-    || lowerUrl.startsWith('http://')
-    || lowerUrl.startsWith('mailto:')
-    || lowerUrl.startsWith('tel:')
-    || url.startsWith('/')
-  ) {
-    return url;
-  }
-
-  return `https://${url}`;
-}
-
-/**
- * Return a supported CTA shape class.
- *
- * @param {string} value authored shape
- * @returns {string} CSS class
- */
-function getShapeClass(value) {
-  const shapes = {
-    rectangle: 'cmp-cta-rectangle',
-    rounded: 'cmp-cta-rounded',
-    pill: 'cmp-cta-pill',
-  };
-
-  return shapes[value] || shapes.rectangle;
-}
-
-/**
- * Generate the arrow text.
- *
- * @param {string} direction authored arrow direction
- * @returns {string} arrow character
- */
-function getArrowText(direction) {
-  const arrows = {
-    left: '←',
-    right: '→',
-    none: '',
-  };
-
-  return arrows[direction] || '';
-}
-
-/**
- * Apply an author-configured color only when a value exists.
- *
- * @param {CSSStyleDeclaration} style link style object
- * @param {string} property CSS property
- * @param {string} value authored color
- */
-function applyColor(style, property, value) {
-  const color = String(value || '').trim();
-
-  if (color) {
-    style.setProperty(property, color);
-  }
-}
-
-/**
- * Decorate CTA block.
- *
- * @param {Element} block CTA block
- */
-export default function decorate(block) {
-  const {
-    ctaText,
-    ctaLink,
-    openInNewTab,
-    shape,
-    backgroundColor,
-    textColor,
-    borderColor,
-    arrowDirection,
-  } = getAuthoredFields(block);
 
   const link = document.createElement('a');
 
-  link.className = `cmp-cta ${getShapeClass(shape)}`;
+  link.classList.add(
+    'cta-link',
+    `cta-link-${data.shape}`,
+  );
 
-  link.href = getSafeUrl(ctaLink);
+  link.href = data.ctaLink;
 
-  if (openInNewTab) {
+  link.textContent = '';
+
+  const ariaLabel = data.ariaLabel || data.ctaText;
+
+  if (ariaLabel) {
+    link.setAttribute('aria-label', ariaLabel);
+  }
+
+  if (data.openInNewTab) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
   }
 
-  applyColor(link.style, 'background-color', backgroundColor);
-  applyColor(link.style, 'color', textColor);
-  applyColor(link.style, 'border-color', borderColor);
-
-  const arrow = getArrowText(arrowDirection);
-
-  if (arrowDirection === 'left' && arrow) {
-    link.textContent = `${arrow} ${ctaText}`;
-  } else if (arrowDirection === 'right' && arrow) {
-    link.textContent = `${ctaText} ${arrow}`;
-  } else {
-    link.textContent = ctaText;
+  if (
+    data.backgroundColor
+    && isValidCssColor(data.backgroundColor)
+  ) {
+    link.style.backgroundColor = data.backgroundColor;
   }
 
-  block.replaceChildren(link);
+  if (
+    data.textColor
+    && isValidCssColor(data.textColor)
+  ) {
+    link.style.color = data.textColor;
+  }
+
+  if (
+    data.borderColor
+    && isValidCssColor(data.borderColor)
+  ) {
+    link.style.borderColor = data.borderColor;
+  }
+
+  if (data.arrowDirection === 'left') {
+    link.append(
+      createArrow('left'),
+    );
+  }
+
+  const text = document.createElement('span');
+
+  text.className = 'cta-text';
+  text.textContent = data.ctaText;
+
+  link.append(text);
+
+  if (data.arrowDirection === 'right') {
+    link.append(
+      createArrow('right'),
+    );
+  }
+
+  return link;
+}
+
+export default function decorate(block) {
+  const data = readBlockContent(block);
+
+  const cta = createCta(data);
+
+  block.replaceChildren();
+
+  if (!cta) {
+    return;
+  }
+
+  block.append(cta);
 }
