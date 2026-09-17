@@ -204,7 +204,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "ctatext",
+        "name": "ctaText",
         "label": "CTA Text",
         "value": "",
         "required": true,
