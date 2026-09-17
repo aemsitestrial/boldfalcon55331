@@ -22,16 +22,6 @@ const ALLOWED_ARROWS = [
   'right',
 ];
 
-/**
- * Reads the text value of a Universal Editor field.
- *
- * Each model field is rendered as a direct child of the block.
- *
- * @param {HTMLElement} block The CTA block.
- * @param {number} index Field index.
- * @param {string} fallback Fallback value.
- * @returns {string} Authored field value.
- */
 function getFieldValue(block, index, fallback = '') {
   const field = block.children[index];
 
@@ -42,14 +32,6 @@ function getFieldValue(block, index, fallback = '') {
   return field.textContent.trim() || fallback;
 }
 
-/**
- * Reads a boolean Universal Editor field.
- *
- * @param {HTMLElement} block The CTA block.
- * @param {number} index Field index.
- * @param {boolean} fallback Fallback value.
- * @returns {boolean} Authored boolean value.
- */
 function getBooleanFieldValue(block, index, fallback = false) {
   const value = getFieldValue(block, index, '');
 
@@ -60,12 +42,6 @@ function getBooleanFieldValue(block, index, fallback = false) {
   return value.toLowerCase() === 'true';
 }
 
-/**
- * Normalizes the CTA shape.
- *
- * @param {string} value Authored shape.
- * @returns {string} Valid shape.
- */
 function normalizeShape(value) {
   if (ALLOWED_SHAPES.includes(value)) {
     return value;
@@ -74,12 +50,6 @@ function normalizeShape(value) {
   return DEFAULTS.shape;
 }
 
-/**
- * Normalizes the arrow direction.
- *
- * @param {string} value Authored arrow direction.
- * @returns {string} Valid arrow direction.
- */
 function normalizeArrow(value) {
   if (ALLOWED_ARROWS.includes(value)) {
     return value;
@@ -88,12 +58,6 @@ function normalizeArrow(value) {
   return DEFAULTS.arrowDirection;
 }
 
-/**
- * Checks whether a value is a valid CSS color.
- *
- * @param {string} value CSS color value.
- * @returns {boolean} True when valid.
- */
 function isValidCssColor(value) {
   if (!value) {
     return false;
@@ -106,12 +70,6 @@ function isValidCssColor(value) {
   return Boolean(element.style.color);
 }
 
-/**
- * Creates the CTA arrow.
- *
- * @param {string} direction Arrow direction.
- * @returns {HTMLElement} Arrow element.
- */
 function createArrow(direction) {
   const wrapper = document.createElement('span');
 
@@ -160,14 +118,6 @@ function createArrow(direction) {
   return wrapper;
 }
 
-/**
- * Reads all authored CTA fields.
- *
- * Field order must match _cta.json.
- *
- * @param {HTMLElement} block CTA block.
- * @returns {object} CTA data.
- */
 function readBlockContent(block) {
   return {
     ctaText: getFieldValue(
@@ -230,12 +180,6 @@ function readBlockContent(block) {
   };
 }
 
-/**
- * Creates the final CTA link.
- *
- * @param {object} data Authored CTA data.
- * @returns {HTMLAnchorElement|null} CTA element.
- */
 function createCta(data) {
   if (!data.ctaText || !data.ctaLink) {
     return null;
@@ -294,11 +238,6 @@ function createCta(data) {
   return link;
 }
 
-/**
- * Decorates the CTA block.
- *
- * @param {HTMLElement} block CTA block.
- */
 export default function decorate(block) {
   const data = readBlockContent(block);
   const cta = createCta(data);
