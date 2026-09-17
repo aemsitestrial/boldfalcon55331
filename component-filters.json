@@ -47,5 +47,17 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "cta",
+    "components": [
+      "cta"
+    ]
+  },
+  {
+    "id": "product-showcase",
+    "components": [
+      "product-showcase"
+    ]
   }
 ]

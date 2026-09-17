@@ -203,30 +203,44 @@
     "fields": [
       {
         "component": "text",
-        "name": "cta_text",
-        "label": "CTA Text",
         "valueType": "string",
-        "required": true
+        "name": "ctatext",
+        "label": "CTA Text",
+        "value": "",
+        "required": true,
+        "description": "Text displayed inside the CTA."
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "ctaLink",
+        "label": "CTA Link",
+        "value": "",
+        "required": true,
+        "description": "Select the page or asset the CTA should link to."
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "openInNewTab",
+        "label": "Open In New Tab",
+        "value": false,
+        "description": "Open the CTA link in a new browser tab."
       },
       {
         "component": "text",
-        "name": "cta_link",
-        "label": "CTA Link",
         "valueType": "string",
-        "required": true
-      },
-      {
-        "component": "checkbox",
-        "name": "behavior_openInNewTab",
-        "label": "Open In New Tab",
-        "valueType": "boolean",
-        "value": false
+        "name": "ariaLabel",
+        "label": "ARIA Label",
+        "value": "",
+        "required": false,
+        "description": "Optional accessible label. If empty, CTA Text is used."
       },
       {
         "component": "select",
+        "valueType": "string",
         "name": "shape",
         "label": "Shape",
-        "valueType": "string",
         "value": "rectangle",
         "options": [
           {
@@ -241,31 +255,41 @@
             "name": "Pill",
             "value": "pill"
           }
-        ]
+        ],
+        "description": "Select the CTA shape."
       },
       {
-        "component": "color-picker",
-        "name": "style_backgroundColor",
+        "component": "text",
+        "valueType": "string",
+        "name": "backgroundColor",
         "label": "Background Color",
-        "valueType": "string"
+        "value": "",
+        "required": false,
+        "description": "CTA background color. Leave empty for a transparent background."
       },
       {
-        "component": "color-picker",
-        "name": "style_textColor",
+        "component": "text",
+        "valueType": "string",
+        "name": "textColor",
         "label": "Text Color",
-        "valueType": "string"
+        "value": "",
+        "required": false,
+        "description": "CTA text and arrow color."
       },
       {
-        "component": "color-picker",
-        "name": "style_borderColor",
+        "component": "text",
+        "valueType": "string",
+        "name": "borderColor",
         "label": "Border Color",
-        "valueType": "string"
+        "value": "",
+        "required": false,
+        "description": "CTA border color. Leave empty when no border is required."
       },
       {
         "component": "select",
-        "name": "behavior_arrowDirection",
-        "label": "Arrow Direction",
         "valueType": "string",
+        "name": "arrowDirection",
+        "label": "Arrow",
         "value": "none",
         "options": [
           {
@@ -280,7 +304,8 @@
             "name": "Right",
             "value": "right"
           }
-        ]
+        ],
+        "description": "Choose whether the CTA displays an arrow and its position."
       }
     ]
   },
