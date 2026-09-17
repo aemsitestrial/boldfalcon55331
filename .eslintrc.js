@@ -27,7 +27,7 @@ module.exports = {
     'no-param-reassign': [2, { props: false }],
 
     'xwalk/max-cells': ['error', {
-      '*': 8,
+      '*': 4,
       cta: 9,
     }],
   },
