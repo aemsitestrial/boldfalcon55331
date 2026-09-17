@@ -129,12 +129,5 @@
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "cta",
-      "components": [
-        "cta"
-      ]
-    }
-  ]
+  "filters": []
 }
