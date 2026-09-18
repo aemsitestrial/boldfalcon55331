@@ -45,7 +45,9 @@
   {
     "id": "product-showcase-item",
     "components": [
-      "image"
+      "image",
+      "text",
+      "cta"
     ]
   },
   {
