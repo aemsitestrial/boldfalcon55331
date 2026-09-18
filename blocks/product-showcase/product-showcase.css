@@ -16,6 +16,10 @@
   min-width: 0;
 }
 
+.product-showcase-image-alt {
+  display: none;
+}
+
 .product-showcase-image picture,
 .product-showcase-image img {
   display: block;
@@ -34,8 +38,13 @@
 .product-showcase-cta {
   min-width: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+}
+
+.product-showcase-cta > div {
+  width: 100%;
 }
 
 .product-showcase-cta a {
