@@ -43,6 +43,14 @@
     ]
   },
   {
+    "id": "product-showcase-item",
+    "components": [
+      "image",
+      "text",
+      "cta"
+    ]
+  },
+  {
     "id": "product-showcase",
     "components": [
       "product-showcase-item"
