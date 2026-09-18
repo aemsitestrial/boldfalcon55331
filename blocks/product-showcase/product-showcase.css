@@ -51,7 +51,7 @@
 }
 
 /* Tablet */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   .product-showcase > div {
     grid-template-columns: 25% 1fr 25%;
     column-gap: 20px;
@@ -59,7 +59,7 @@
 }
 
 /* Mobile */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .product-showcase > div {
     grid-template-columns: 1fr;
     row-gap: 16px;
