@@ -14,7 +14,6 @@
       "title",
       "hero",
       "cards",
-      "cardsCopy",
       "columns",
       "fragment",
       "cta",
@@ -40,6 +39,20 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "product-showcase",
+    "components": [
+      "product-showcase-item"
+    ]
+  },
+  {
+    "id": "product-showcase-item",
+    "components": [
+      "image",
+      "text",
+      "cta"
     ]
   }
 ]
