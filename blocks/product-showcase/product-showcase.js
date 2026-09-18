@@ -1,28 +1,23 @@
 export default function decorate(block) {
-  const rows = [...block.children];
+  block.classList.add('product-showcase');
 
-  rows.forEach((row, index) => {
-    row.classList.add('product-showcase-item');
+  const items = [...block.children];
 
-    const children = [...row.children];
+  items.forEach((item) => {
+    item.classList.add('product-showcase-item');
 
-    // Existing components:
-    // 1 = Image
-    // 2 = Description/Text
-    // 3 = CTA
-    children.forEach((child, childIndex) => {
-      if (childIndex === 0) {
+    const children = [...item.children];
+
+    children.forEach((child) => {
+      const content = child.firstElementChild || child;
+
+      if (content.querySelector?.('picture, img')) {
         child.classList.add('product-showcase-image');
-      } else if (childIndex === 1) {
-        child.classList.add('product-showcase-description');
-      } else if (childIndex === 2) {
+      } else if (content.querySelector?.('a')) {
         child.classList.add('product-showcase-cta');
+      } else {
+        child.classList.add('product-showcase-description');
       }
     });
-
-    // Separator is handled completely by CSS.
-    if (index === rows.length - 1) {
-      row.classList.add('product-showcase-item-last');
-    }
   });
 }

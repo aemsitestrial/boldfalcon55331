@@ -2,76 +2,55 @@
   width: 100%;
 }
 
-.product-showcase > div {
+.product-showcase-item {
   display: grid;
-  grid-template-columns: 30% 1fr 20%;
+  grid-template-columns: 30% 50% 20%;
   align-items: center;
-  column-gap: 32px;
+  gap: 24px;
+  width: 100%;
   padding: 24px 0;
   border-bottom: 1px solid #ccc;
 }
 
-/* Remove separator from last item */
-.product-showcase > div:last-child {
-  border-bottom: 0;
-}
-
-/* Image */
 .product-showcase-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-width: 0;
 }
 
+.product-showcase-image picture,
 .product-showcase-image img {
   display: block;
   width: 100%;
   height: auto;
-  object-fit: contain;
 }
 
-/* Description */
 .product-showcase-description {
   min-width: 0;
 }
 
-/* CTA */
-.product-showcase-cta {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-/*
- * Keep the existing CTA as a button.
- * Product Showcase does not recreate or modify CTA markup.
- */
-.product-showcase-cta .cta {
+.product-showcase-description p {
   margin: 0;
 }
 
-/* Tablet */
-@media (width <= 900px) {
-  .product-showcase > div {
-    grid-template-columns: 25% 1fr 25%;
-    column-gap: 20px;
-  }
+.product-showcase-cta {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-/* Mobile */
-@media (width <= 600px) {
-  .product-showcase > div {
-    grid-template-columns: 1fr;
-    row-gap: 16px;
-    padding: 20px 0;
-  }
+.product-showcase-cta a {
+  display: inline-flex;
+  align-items: center;
+}
 
-  .product-showcase-image {
-    justify-content: flex-start;
+@media (width <=768px) {
+  .product-showcase-item {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .product-showcase-image img {
-    max-width: 240px;
+    max-width: 100%;
   }
 
   .product-showcase-cta {
