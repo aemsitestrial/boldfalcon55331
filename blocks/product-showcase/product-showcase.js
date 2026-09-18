@@ -1,23 +1,34 @@
 export default function decorate(block) {
-  block.classList.add('product-showcase');
+  const rows = [...block.children];
 
-  const items = [...block.children];
+  rows.forEach((row) => {
+    const columns = [...row.children];
 
-  items.forEach((item) => {
-    item.classList.add('product-showcase-item');
+    // Expected existing components:
+    // 1. Image
+    // 2. Text / Description
+    // 3. CTA
 
-    const children = [...item.children];
+    if (columns.length < 3) {
+      row.classList.add('product-showcase-row');
+      return;
+    }
 
-    children.forEach((child) => {
-      const content = child.firstElementChild || child;
+    const imageColumn = columns[0];
+    const descriptionColumn = columns[1];
+    const ctaColumn = columns[2];
 
-      if (content.querySelector?.('picture, img')) {
-        child.classList.add('product-showcase-image');
-      } else if (content.querySelector?.('a')) {
-        child.classList.add('product-showcase-cta');
-      } else {
-        child.classList.add('product-showcase-description');
-      }
-    });
+    // Existing Image component
+    imageColumn.classList.add('product-showcase-image');
+
+    // Existing Text component
+    descriptionColumn.classList.add('product-showcase-description');
+
+    // Existing CTA component
+    ctaColumn.classList.add('product-showcase-cta');
+
+    row.classList.add('product-showcase-row');
   });
+
+  block.classList.add('product-showcase');
 }
