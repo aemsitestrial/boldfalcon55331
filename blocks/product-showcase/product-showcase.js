@@ -1,34 +1,28 @@
 export default function decorate(block) {
   const rows = [...block.children];
 
-  rows.forEach((row) => {
-    const columns = [...row.children];
+  rows.forEach((row, index) => {
+    row.classList.add('product-showcase-item');
 
-    // Expected existing components:
-    // 1. Image
-    // 2. Text / Description
-    // 3. CTA
+    const children = [...row.children];
 
-    if (columns.length < 3) {
-      row.classList.add('product-showcase-row');
-      return;
+    // Existing components:
+    // 1 = Image
+    // 2 = Description/Text
+    // 3 = CTA
+    children.forEach((child, childIndex) => {
+      if (childIndex === 0) {
+        child.classList.add('product-showcase-image');
+      } else if (childIndex === 1) {
+        child.classList.add('product-showcase-description');
+      } else if (childIndex === 2) {
+        child.classList.add('product-showcase-cta');
+      }
+    });
+
+    // Separator is handled completely by CSS.
+    if (index === rows.length - 1) {
+      row.classList.add('product-showcase-item-last');
     }
-
-    const imageColumn = columns[0];
-    const descriptionColumn = columns[1];
-    const ctaColumn = columns[2];
-
-    // Existing Image component
-    imageColumn.classList.add('product-showcase-image');
-
-    // Existing Text component
-    descriptionColumn.classList.add('product-showcase-description');
-
-    // Existing CTA component
-    ctaColumn.classList.add('product-showcase-cta');
-
-    row.classList.add('product-showcase-row');
   });
-
-  block.classList.add('product-showcase');
 }
