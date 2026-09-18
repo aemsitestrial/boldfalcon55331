@@ -325,5 +325,13 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "product-showcase-item",
+    "fields": []
+  },
+  {
+    "id": "product-showcase",
+    "fields": []
   }
 ]
