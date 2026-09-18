@@ -1,35 +1,23 @@
 export default function decorate(block) {
-  const rows = [...block.children];
-
-  rows.forEach((row) => {
-    const columns = [...row.children];
-
-    // Expected structure:
-    // Column 1 = Image
-    // Column 2 = Description
-    // Column 3 = CTA
-
-    const imageColumn = columns[0];
-    const descriptionColumn = columns[1];
-    const ctaColumn = columns[2];
-
-    // Image
-    if (imageColumn) {
-      imageColumn.classList.add('product-showcase-image');
-    }
-
-    // Description
-    if (descriptionColumn) {
-      descriptionColumn.classList.add('product-showcase-description');
-    }
-
-    // CTA
-    if (ctaColumn) {
-      ctaColumn.classList.add('product-showcase-cta');
-    }
-
-    row.classList.add('product-showcase-row');
-  });
-
   block.classList.add('product-showcase');
+
+  const items = [...block.children];
+
+  items.forEach((item) => {
+    item.classList.add('product-showcase-item');
+
+    const children = [...item.children];
+
+    children.forEach((child) => {
+      const content = child.firstElementChild || child;
+
+      if (content.querySelector?.('picture, img')) {
+        child.classList.add('product-showcase-image');
+      } else if (content.querySelector?.('a')) {
+        child.classList.add('product-showcase-cta');
+      } else {
+        child.classList.add('product-showcase-description');
+      }
+    });
+  });
 }

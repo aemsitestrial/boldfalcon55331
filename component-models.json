@@ -142,25 +142,6 @@
     ]
   },
   {
-    "id": "cardsCopy",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "card",
     "fields": [
       {
@@ -342,32 +323,6 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "product-showcase",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Description"
-      },
-      {
-        "component": "text",
-        "name": "cta_text",
-        "label": "CTA Text"
-      },
-      {
-        "component": "text",
-        "name": "cta_link",
-        "label": "CTA Link"
       }
     ]
   }

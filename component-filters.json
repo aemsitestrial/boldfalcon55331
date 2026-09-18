@@ -22,12 +22,6 @@
     ]
   },
   {
-    "id": "cardsCopy",
-    "components": [
-      "cardsCopyItem"
-    ]
-  },
-  {
     "id": "cards",
     "components": [
       "card"
@@ -51,7 +45,15 @@
   {
     "id": "product-showcase",
     "components": [
-      "product-showcase"
+      "product-showcase-item"
+    ]
+  },
+  {
+    "id": "product-showcase-item",
+    "components": [
+      "image",
+      "text",
+      "cta"
     ]
   }
 ]
