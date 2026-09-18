@@ -4,7 +4,7 @@
 
 .product-showcase-item {
   display: grid;
-  grid-template-columns: 30% 50% 20%;
+  grid-template-columns: 35% 55% 20%;
   align-items: center;
   gap: 24px;
   width: 100%;

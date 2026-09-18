@@ -173,6 +173,21 @@
           }
         },
         {
+          "title": "Product Showcase Item",
+          "id": "product-showcase-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Product Showcase Item",
+                  "filter": "product-showcase-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Product Showcase",
           "id": "product-showcase",
           "plugins": {
