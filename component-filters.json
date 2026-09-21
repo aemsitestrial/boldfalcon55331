@@ -44,17 +44,17 @@
     ]
   },
   {
-    "id": "product-showcase-item",
+    "id": "product-showcase",
+    "components": [
+      "product-showcase-column"
+    ]
+  },
+  {
+    "id": "product-showcase-column",
     "components": [
       "image",
       "text",
       "cta"
-    ]
-  },
-  {
-    "id": "product-showcase",
-    "components": [
-      "product-showcase-item"
     ]
   },
   {

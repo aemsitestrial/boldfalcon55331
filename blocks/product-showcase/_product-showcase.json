@@ -6,10 +6,10 @@
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block",
+            "resourceType": "core/franklin/components/columns/v1/columns",
             "template": {
-              "name": "Product Showcase",
-              "filter": "product-showcase"
+              "columns": "2",
+              "rows": "1"
             }
           }
         }
@@ -19,14 +19,37 @@
   "models": [
     {
       "id": "product-showcase",
-      "fields": []
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "number",
+          "name": "columns",
+          "value": "",
+          "label": "Columns"
+        },
+        {
+          "component": "text",
+          "valueType": "number",
+          "name": "rows",
+          "value": "",
+          "label": "Rows"
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "product-showcase",
       "components": [
-        "product-showcase-item"
+        "product-showcase-column"
+      ]
+    },
+    {
+      "id": "product-showcase-column",
+      "components": [
+        "image",
+        "text",
+        "cta"
       ]
     }
   ]
