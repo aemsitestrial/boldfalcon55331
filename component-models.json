@@ -314,37 +314,12 @@
     ]
   },
   {
+    "id": "product-showcase-item",
+    "fields": []
+  },
+  {
     "id": "product-showcase",
-    "fields": [
-      {
-        "component": "container",
-        "name": "products",
-        "label": "Products",
-        "multi": true,
-        "fields": [
-          {
-            "component": "reference",
-            "valueType": "string",
-            "name": "image",
-            "label": "Image",
-            "multi": false
-          },
-          {
-            "component": "richtext",
-            "name": "text",
-            "label": "Text",
-            "value": "",
-            "valueType": "string"
-          },
-          {
-            "component": "aem-content",
-            "name": "cta",
-            "label": "CTA",
-            "value": ""
-          }
-        ]
-      }
-    ]
+    "fields": []
   },
   {
     "id": "products-platforms",
