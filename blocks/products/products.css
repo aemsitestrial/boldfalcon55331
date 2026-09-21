@@ -25,13 +25,13 @@
 @media (width >= 900px) {
   .products > div {
     align-items: center;
-    flex-direction: unset;
+    flex-direction: row;
     gap: 24px;
   }
 
   .products > div > div {
     flex: 1;
-    order: unset;
+    order: 0;
   }
 
   .products > div > div:last-child {
