@@ -29,7 +29,7 @@
           "required": true
         },
         {
-          "component": "aem-content",
+          "component": "aem-content", 
           "valueType": "string",
           "name": "ctaLink",
           "label": "CTA Link",
