@@ -1,0 +1,51 @@
+{
+  "definitions": [
+    {
+      "title": "Products",
+      "id": "products",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/columns/v1/columns",
+            "template": {
+              "columns": "3",
+              "rows": "3",
+              "filter": "product-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "products",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "number",
+          "name": "columns",
+          "value": "",
+          "label": "Columns"
+        },
+        {
+          "component": "text",
+          "valueType": "number",
+          "name": "rows",
+          "value": "",
+          "label": "Rows"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "product-item",
+      "components": [
+        "image",
+        "text",
+        "cta"
+      ]
+    }
+  ]
+}

@@ -19,7 +19,8 @@
       "fragment",
       "cta",
       "product-showcase",
-      "products-platforms"
+      "products-platforms",
+      "products"
     ]
   },
   {
@@ -59,6 +60,14 @@
   },
   {
     "id": "products-components",
+    "components": [
+      "image",
+      "text",
+      "cta"
+    ]
+  },
+  {
+    "id": "product-item",
     "components": [
       "image",
       "text",
