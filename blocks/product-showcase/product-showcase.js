@@ -1,16 +1,15 @@
 export default function decorate(block) {
   block.classList.add('product-showcase');
 
-  const columns = [...block.firstElementChild.children];
-  block.classList.add(`product-showcase-${columns.length}-cols`);
+  const firstRow = block.firstElementChild;
+  const columnCount = firstRow ? firstRow.children.length : 0;
+  block.classList.add(`product-showcase-${columnCount}-cols`);
 
   [...block.children].forEach((row) => {
-    [...row.children].forEach((column) => {
-      const picture = column.querySelector('picture');
-
-      if (picture && picture.closest('div')?.children.length === 1) {
-        picture.closest('div').classList.add('product-showcase-image');
-      }
+    [...row.children].forEach((column, index) => {
+      if (index === 0) column.classList.add('product-showcase-image');
+      if (index === 1) column.classList.add('product-showcase-text');
+      if (index === 2) column.classList.add('product-showcase-cta');
     });
   });
 }
