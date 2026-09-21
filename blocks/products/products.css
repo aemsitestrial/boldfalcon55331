@@ -38,21 +38,21 @@
     text-align: right;
   }
 
-  .products > div > div:only-child {
+  .products > div > .products-column {
     display: flex;
     align-items: center;
     gap: 24px;
   }
 
-  .products > div > div:only-child > .products-image-cell {
+  .products > div > .products-column > .products-image-cell {
     flex: 0 0 30%;
   }
 
-  .products > div > div:only-child > .products-text-cell {
+  .products > div > .products-column > .products-text-cell {
     flex: 1;
   }
 
-  .products > div > div:only-child > .products-cta-cell {
+  .products > div > .products-column > .products-cta-cell {
     flex: 0 0 auto;
     margin-left: auto;
   }

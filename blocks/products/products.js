@@ -7,6 +7,8 @@ export default function decorate(block) {
   // setup image columns
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
+      col.classList.add('products-column');
+
       [...col.children].forEach((cell) => {
         if (cell.querySelector('picture')) {
           cell.classList.add('products-image-cell');
