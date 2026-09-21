@@ -38,7 +38,7 @@
   height: auto;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .products > div > .product {
     grid-template-columns: 1fr;
   }
