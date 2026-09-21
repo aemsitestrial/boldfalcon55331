@@ -7,7 +7,7 @@
 }
 
 .products img {
-  width: 100%;
+  max-width: 100%;
 }
 
 .products > div > div {
@@ -36,5 +36,24 @@
 
   .products > div > div:last-child {
     text-align: right;
+  }
+
+  .products > div > div:only-child {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .products > div > div:only-child > .products-image-cell {
+    flex: 0 0 30%;
+  }
+
+  .products > div > div:only-child > .products-text-cell {
+    flex: 1;
+  }
+
+  .products > div > div:only-child > .products-cta-cell {
+    flex: 0 0 auto;
+    margin-left: auto;
   }
 }
