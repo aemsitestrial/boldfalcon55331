@@ -44,20 +44,6 @@
     ]
   },
   {
-    "id": "product-showcase",
-    "components": [
-      "product-showcase-column"
-    ]
-  },
-  {
-    "id": "product-showcase-column",
-    "components": [
-      "image",
-      "text",
-      "cta"
-    ]
-  },
-  {
     "id": "products-components",
     "components": [
       "image",
