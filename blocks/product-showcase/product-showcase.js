@@ -9,23 +9,31 @@ export default async function decorate(block) {
     item.classList.add('product-showcase-item');
 
     const children = [...item.children];
-    const childBlocks = children.filter((child) => (
-      child.classList.contains('image')
-      || child.classList.contains('text')
-      || child.classList.contains('cta')
-    ));
 
-    childBlocks.forEach((child) => decorateBlock(child));
-    await Promise.all(childBlocks.map((child) => loadBlock(child)));
+    const image = children.find((child) => child.classList.contains('image'));
+    const text = children.find((child) => child.classList.contains('text'));
+    const cta = children.find((child) => child.classList.contains('cta'));
 
-    children.forEach((child) => {
-      if (child.classList.contains('image')) {
-        child.classList.add('product-showcase-image');
-      } else if (child.classList.contains('cta')) {
-        child.classList.add('product-showcase-cta');
-      } else {
-        child.classList.add('product-showcase-description');
-      }
+    const childBlocks = [image, text, cta].filter(Boolean);
+
+    childBlocks.forEach((child) => {
+      decorateBlock(child);
     });
+
+    await Promise.all(
+      childBlocks.map((child) => loadBlock(child)),
+    );
+
+    if (image) {
+      image.classList.add('product-showcase-image');
+    }
+
+    if (text) {
+      text.classList.add('product-showcase-description');
+    }
+
+    if (cta) {
+      cta.classList.add('product-showcase-cta');
+    }
   }));
 }
