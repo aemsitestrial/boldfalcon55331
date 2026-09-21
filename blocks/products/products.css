@@ -22,7 +22,7 @@
   justify-content: flex-end;
 }
 
-@media (width < 900px) {
+@media (width < 600px) {
   .products > div > .products-column {
     grid-template-columns: 1fr;
     gap: 12px;
