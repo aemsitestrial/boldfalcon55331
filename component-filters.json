@@ -67,7 +67,7 @@
     ]
   },
   {
-    "id": "product-item",
+    "id": "product",
     "components": [
       "image",
       "text",

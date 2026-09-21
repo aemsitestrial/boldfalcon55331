@@ -1,31 +1,24 @@
 export default function decorate(block) {
+  const rows = [...block.children];
+
   block.classList.add('products');
 
-  const cols = [...block.firstElementChild.children];
-  block.classList.add(`columns-${cols.length}-cols`);
+  rows.forEach((row) => {
+    const product = row.firstElementChild;
 
-  // setup image columns
-  [...block.children].forEach((row) => {
-    [...row.children].forEach((col) => {
-      col.classList.add('products-column');
+    if (!product) return;
 
-      [...col.children].forEach((cell) => {
-        if (cell.querySelector('picture')) {
-          cell.classList.add('products-image-cell');
-        } else if (cell.querySelector('a')) {
-          cell.classList.add('products-cta-cell');
-        } else {
-          cell.classList.add('products-text-cell');
-        }
-      });
+    product.classList.add('product');
 
-      const pic = col.querySelector('picture');
-      if (pic) {
-        const picWrapper = pic.closest('div');
-        if (picWrapper && picWrapper.children.length === 1) {
-          // picture is only content in column
-          picWrapper.classList.add('columns-img-col');
-        }
+    const children = [...product.children];
+
+    children.forEach((child, index) => {
+      if (index === 0) {
+        child.classList.add('product-image');
+      } else if (index === 1) {
+        child.classList.add('product-description');
+      } else if (index === 2) {
+        child.classList.add('product-cta');
       }
     });
   });

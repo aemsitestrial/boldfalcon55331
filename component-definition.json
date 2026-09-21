@@ -227,8 +227,7 @@
                 "resourceType": "core/franklin/components/columns/v1/columns",
                 "template": {
                   "columns": "1",
-                  "rows": "3",
-                  "filter": "product-item"
+                  "rows": "3"
                 }
               }
             }
