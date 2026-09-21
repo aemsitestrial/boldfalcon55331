@@ -23,38 +23,25 @@
         {
           "component": "text",
           "name": "title",
-          "label": "Title"
+          "label": "Section Title"
         },
         {
           "component": "container",
           "name": "products",
           "label": "Products",
-          "multi": true,
-          "fields": [
-            {
-              "component": "reference",
-              "valueType": "string",
-              "name": "image",
-              "label": "Image",
-              "multi": false
-            },
-            {
-              "component": "richtext",
-              "name": "text",
-              "label": "Text",
-              "value": "",
-              "valueType": "string"
-            },
-            {
-              "component": "aem-content",
-              "name": "cta",
-              "label": "CTA Link",
-              "value": ""
-            }
-          ]
+          "multi": true
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "products-components",
+      "components": [
+        "image",
+        "text",
+        "cta"
+      ]
+    }
+  ]
 }

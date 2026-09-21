@@ -57,5 +57,13 @@
       "text",
       "cta"
     ]
+  },
+  {
+    "id": "products-components",
+    "components": [
+      "image",
+      "text",
+      "cta"
+    ]
   }
 ]

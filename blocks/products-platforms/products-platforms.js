@@ -1,39 +1,21 @@
 export default function decorate(block) {
-  const children = [...block.children];
-  if (!children.length) return;
-  const titleRow = children.shift();
+  const rows = [...block.children];
 
-  const titleWrapper = document.createElement('div');
-  titleWrapper.className = 'products-title';
-  titleWrapper.append(...titleRow.childNodes);
-
-  const productsList = document.createElement('div');
-  productsList.className = 'products-list';
-
-  children.forEach((row) => {
+  rows.forEach((row) => {
     const cols = [...row.children];
 
-    if (cols.length < 3) return;
+    row.classList.add('product-item');
 
-    const item = document.createElement('div');
-    item.className = 'product-item';
+    if (cols[0]) {
+      cols[0].classList.add('product-image');
+    }
 
-    const imageCol = document.createElement('div');
-    imageCol.className = 'product-image';
-    imageCol.append(...cols[0].childNodes);
+    if (cols[1]) {
+      cols[1].classList.add('product-text');
+    }
 
-    const textCol = document.createElement('div');
-    textCol.className = 'product-text';
-    textCol.append(...cols[1].childNodes);
-
-    const ctaCol = document.createElement('div');
-    ctaCol.className = 'product-cta';
-    ctaCol.append(...cols[2].childNodes);
-
-    item.append(imageCol, textCol, ctaCol);
-    productsList.append(item);
+    if (cols[2]) {
+      cols[2].classList.add('product-cta');
+    }
   });
-
-  block.textContent = '';
-  block.append(titleWrapper, productsList);
 }
