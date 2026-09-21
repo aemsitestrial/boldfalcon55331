@@ -1,59 +1,34 @@
 .products > div {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: block;
   padding: 18px 0;
   border-bottom: 1px solid #999;
 }
 
+.products > div > .products-column {
+  display: grid;
+  grid-template-columns: minmax(140px, 24%) minmax(0, 1fr) minmax(160px, 24%);
+  align-items: center;
+  gap: 24px;
+  min-width: 0;
+}
+
 .products img {
+  display: block;
   max-width: 100%;
 }
 
-.products > div > div {
-  order: 1;
+.products > div > .products-column > .products-cta-cell {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.products > div > .columns-img-col {
-  order: 0;
-}
-
-.products > div > .columns-img-col img {
-  display: block;
-}
-
-@media (width >= 900px) {
-  .products > div {
-    align-items: center;
-    flex-direction: row;
-    gap: 24px;
-  }
-
-  .products > div > div {
-    flex: 1;
-    order: 0;
-  }
-
-  .products > div > div:last-child {
-    text-align: right;
-  }
-
+@media (width < 900px) {
   .products > div > .products-column {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .products > div > .products-column > .products-image-cell {
-    flex: 0 0 30%;
-  }
-
-  .products > div > .products-column > .products-text-cell {
-    flex: 1;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .products > div > .products-column > .products-cta-cell {
-    flex: 0 0 auto;
-    margin-left: auto;
+    justify-content: flex-start;
   }
 }
