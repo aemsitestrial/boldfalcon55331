@@ -1,0 +1,38 @@
+.products-platforms {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.products-platforms .products-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.products-platforms .product-item {
+  display: flex;
+  align-items: center;
+  min-height: 108px;
+  padding: 24px 0;
+}
+
+.products-platforms .product-item + .product-item {
+  border-top: 1px solid #d9d9d9;
+}
+
+/* Image Column */
+.products-platforms .product-image {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+/* Text Column */
+.products-platforms .product-text {
+  flex: 1;
+  padding: 0 32px;
+}
+
+/* CTA Column */
+.products-platforms .product-cta {
+  width: 250px;
+  text-align: right;
+}

@@ -53,7 +53,9 @@
   {
     "id": "product-showcase",
     "components": [
-      "product-showcase-item"
+      "image",
+      "text",
+      "cta"
     ]
   }
 ]
