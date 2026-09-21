@@ -4,6 +4,8 @@ export default function decorate(block) {
   rows.forEach((row) => {
     const cols = [...row.children];
 
+    if (cols.length < 3) return;
+
     row.classList.add('product-item');
 
     if (cols[0]) {

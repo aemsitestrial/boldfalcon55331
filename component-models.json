@@ -389,7 +389,29 @@
         "component": "container",
         "name": "products",
         "label": "Products",
-        "multi": true
+        "multi": true,
+        "fields": [
+          {
+            "component": "reference",
+            "valueType": "string",
+            "name": "image",
+            "label": "Image",
+            "multi": false
+          },
+          {
+            "component": "richtext",
+            "name": "text",
+            "label": "Text",
+            "value": "",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "cta",
+            "label": "CTA Link",
+            "value": ""
+          }
+        ]
       }
     ]
   }
