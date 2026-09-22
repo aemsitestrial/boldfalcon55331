@@ -240,23 +240,38 @@
     ]
   },
   {
-    "id": "card",
+    "id": "cards",
     "fields": [
       {
-        "component": "reference",
+        "component": "select",
         "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string"
+        "name": "classes",
+        "label": "Card Type",
+        "value": "case-study",
+        "options": [
+          {
+            "name": "Case Study",
+            "value": "case-study"
+          },
+          {
+            "name": "Capability",
+            "value": "capability"
+          },
+          {
+            "name": "Insight",
+            "value": "insight"
+          },
+          {
+            "name": "Topic Hub",
+            "value": "topic"
+          }
+        ]
       }
     ]
+  },
+  {
+    "id": "card",
+    "fields": []
   },
   {
     "id": "columns",

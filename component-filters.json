@@ -30,6 +30,15 @@
     ]
   },
   {
+    "id": "card",
+    "components": [
+      "image",
+      "title",
+      "text",
+      "button"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
