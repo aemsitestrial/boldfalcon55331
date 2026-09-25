@@ -57,11 +57,17 @@
   ],
   "filters": [
     {
-      "id": "product-links",
+      "id": "item",
       "components": [
         "image",
         "text",
         "cta"
+      ]
+    },
+    {
+      "id": "product-links",
+      "components": [
+        "item"
       ]
     }
   ]
