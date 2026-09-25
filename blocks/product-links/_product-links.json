@@ -24,7 +24,7 @@
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Item",
+              "name": "Product Item",
               "model": "product-links-item",
               "filter": "product-links-item"
             }
@@ -45,17 +45,17 @@
   ],
   "filters": [
     {
+      "id": "product-links",
+      "components": [
+        "product-links-item"
+      ]
+    },
+    {
       "id": "product-links-item",
       "components": [
         "image",
         "text",
         "cta"
-      ]
-    },
-    {
-      "id": "product-links",
-      "components": [
-        "product-links-item"
       ]
     }
   ]
