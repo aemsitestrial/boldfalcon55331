@@ -19,6 +19,15 @@ module.exports = {
     requireConfigFile: false,
   },
 
+  overrides: [
+    {
+      files: ['component-models.json'],
+      rules: {
+        'xwalk/max-cells': 'off',
+      },
+    },
+  ],
+
   rules: {
     'import/extensions': ['error', { js: 'always' }],
 
@@ -26,9 +35,5 @@ module.exports = {
 
     'no-param-reassign': [2, { props: false }],
 
-    'xwalk/max-cells': ['error', {
-      '*': 4,
-      cta: 9,
-    }],
   },
 };

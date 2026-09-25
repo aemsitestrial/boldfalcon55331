@@ -54,6 +54,14 @@
     ]
   },
   {
+    "id": "product-links",
+    "components": [
+      "image",
+      "text",
+      "cta"
+    ]
+  },
+  {
     "id": "product-showcase-item",
     "components": [
       "image",
