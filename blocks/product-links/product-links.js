@@ -7,14 +7,15 @@ export default async function decorate(block) {
     item.classList.add('product-links-item');
 
     const columns = [...item.children];
-    const blockNames = ['image', 'text', 'cta'];
 
-    columns.forEach((column, index) => {
-      if (blockNames[index]) column.classList.add(blockNames[index]);
-    });
+    const childBlocks = columns.filter((column) => (
+      column.classList.contains('image')
+      || column.classList.contains('text')
+      || column.classList.contains('cta')
+    ));
 
-    columns.forEach((column) => decorateBlock(column));
-    await Promise.all(columns.map((column) => loadBlock(column)));
+    childBlocks.forEach((child) => decorateBlock(child));
+    await Promise.all(childBlocks.map((child) => loadBlock(child)));
 
     columns.forEach((column) => {
       if (column.classList.contains('image')) {
