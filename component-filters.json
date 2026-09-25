@@ -55,7 +55,7 @@
     ]
   },
   {
-    "id": "item",
+    "id": "product-links-item",
     "components": [
       "image",
       "text",
@@ -65,7 +65,7 @@
   {
     "id": "product-links",
     "components": [
-      "item"
+      "product-links-item"
     ]
   },
   {

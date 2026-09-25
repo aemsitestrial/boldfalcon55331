@@ -1,21 +1,12 @@
 import { decorateBlock, loadBlock } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
-  const itemsContainer = block.querySelector(':scope > div');
-  const items = itemsContainer ? [...itemsContainer.children] : [];
+  const items = [...block.children];
 
   await Promise.all(items.map(async (item) => {
     item.classList.add('product-links-item');
 
-    const itemContent = item.children.length === 1
-      && item.firstElementChild.children.length
-      ? item.firstElementChild
-      : item;
-    const columns = [...itemContent.children];
-
-    if (itemContent !== item) {
-      item.replaceChildren(...columns);
-    }
+    const columns = [...item.children];
 
     const childBlocks = columns.filter((column) => (
       column.classList.contains('image')

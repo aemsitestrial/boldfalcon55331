@@ -191,6 +191,22 @@
           }
         },
         {
+          "title": "Product Link Item",
+          "id": "product-links-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Item",
+                  "model": "product-links-item",
+                  "filter": "product-links-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Product Showcase Item",
           "id": "product-showcase-item",
           "plugins": {
