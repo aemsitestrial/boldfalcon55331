@@ -28,19 +28,27 @@
           "multi": true,
           "fields": [
             {
-              "component": "reference",
-              "name": "image",
-              "label": "Image"
-            },
-            {
-              "component": "reference",
-              "name": "text",
-              "label": "Text"
-            },
-            {
-              "component": "reference",
-              "name": "cta",
-              "label": "CTA"
+              "component": "container",
+              "name": "item",
+              "label": "Item",
+              "multi": false,
+              "fields": [
+                {
+                  "component": "reference",
+                  "name": "image",
+                  "label": "Image"
+                },
+                {
+                  "component": "reference",
+                  "name": "text",
+                  "label": "Text"
+                },
+                {
+                  "component": "reference",
+                  "name": "cta",
+                  "label": "CTA"
+                }
+              ]
             }
           ]
         }

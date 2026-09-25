@@ -7,7 +7,16 @@ export default async function decorate(block) {
   await Promise.all(items.map(async (item) => {
     item.classList.add('product-links-item');
 
-    const columns = [...item.children];
+    const itemContent = item.children.length === 1
+      && item.firstElementChild.children.length
+      ? item.firstElementChild
+      : item;
+    const columns = [...itemContent.children];
+
+    if (itemContent !== item) {
+      item.replaceChildren(...columns);
+    }
+
     const childBlocks = columns.filter((column) => (
       column.classList.contains('image')
       || column.classList.contains('text')
