@@ -18,6 +18,7 @@
       "columns",
       "fragment",
       "cta",
+      "product-item",
       "product-links",
       "product-showcase",
       "products-platforms",
@@ -55,17 +56,17 @@
     ]
   },
   {
-    "id": "product-links",
-    "components": [
-      "product-links-item"
-    ]
-  },
-  {
-    "id": "product-links-item",
+    "id": "product-item",
     "components": [
       "image",
       "text",
       "cta"
+    ]
+  },
+  {
+    "id": "product-links",
+    "components": [
+      "product-item"
     ]
   },
   {

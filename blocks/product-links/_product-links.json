@@ -15,31 +15,11 @@
           }
         }
       }
-    },
-    {
-      "title": "Product Link Item",
-      "id": "product-links-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block",
-            "template": {
-              "name": "Product Link Item",
-              "model": "product-links-item",
-              "filter": "product-links-item"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
     {
       "id": "product-links",
-      "fields": []
-    },
-    {
-      "id": "product-links-item",
       "fields": []
     }
   ],
@@ -47,15 +27,7 @@
     {
       "id": "product-links",
       "components": [
-        "product-links-item"
-      ]
-    },
-    {
-      "id": "product-links-item",
-      "components": [
-        "image",
-        "text",
-        "cta"
+        "product-item"
       ]
     }
   ]
