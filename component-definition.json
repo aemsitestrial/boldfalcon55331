@@ -8,12 +8,16 @@
           "title": "Text",
           "id": "text",
           "plugins": {
+            "da": {
+              "name": "text",
+              "type": "text"
+            },
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/text/v1/text",
                 "template": {
                   "model": "text",
-                  "filters": "richtext"
+                  "filter": "richtext"
                 }
               }
             }
